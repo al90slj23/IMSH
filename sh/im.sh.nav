@@ -1,0 +1,201 @@
+#!/bin/bash
+
+# IM.SH 导航模块
+# 版本: 2.0.0
+# 作者: IM.SH.CN
+
+# 显示导航提示
+show_navigation_tips() {
+    echo -e "${YELLOW}导航提示:${NC}"
+    echo "  输入 help 查看帮助"
+    echo "  输入 menu 返回主菜单"
+    echo "  输入 exit 或 bye 直接退出"
+    echo "  输入 回车 每个步骤直接回车就选择第一个选项"
+    echo "  输入 0   返回上一层"
+    echo "  输入 00  退出程序（后续需要输入yes，防止误操作）"
+    echo "  直接输入数字串，可快速跳转 (如: 111)"
+    echo ""
+}
+
+# 处理用户输入
+handle_input() {
+    local input="$1"
+    local current_level="$2"
+    
+    # 处理特殊命令
+    case "$input" in
+        "exit"|"bye")
+            log_info "再见！感谢使用 IM.SH VPS小助手"
+            exit 0
+            ;;
+        "help")
+            show_help
+            return 1
+            ;;
+        "menu")
+            return 3  # 返回主菜单的特殊标识
+            ;;
+        "00")
+            echo ""
+            read -p "确定要退出吗？输入 yes 确认: " confirm
+            if [[ "$confirm" == "yes" ]]; then
+                log_info "再见！感谢使用 IM.SH VPS小助手"
+                exit 0
+            else
+                return 1
+            fi
+            ;;
+        "0")
+            return 0  # 返回上一层
+            ;;
+        "")
+            return 1  # 空输入，重新显示菜单
+            ;;
+    esac
+    
+    # 处理数字输入
+    if [[ "$input" =~ ^[0-9]+$ ]]; then
+        # 检查是否为直接跳转
+        if [ ${#input} -gt 1 ]; then
+            execute_direct_command "$input"
+            return 1
+        fi
+        
+        # 单个数字，在当前层级处理
+        return 2
+    fi
+    
+    log_warning "无效输入: $input"
+    return 1
+}
+
+# 显示帮助信息
+show_help() {
+    clear
+    echo -e "${CYAN}"
+    echo "██╗  ██╗███████╗██╗     ██████╗ "
+    echo "██║  ██║██╔════╝██║     ██╔══██╗"
+    echo "███████║█████╗  ██║     ██████╔╝"
+    echo "██╔══██║██╔══╝  ██║     ██╔═══╝ "
+    echo "██║  ██║███████╗███████╗██║     "
+    echo "╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     "
+    echo -e "${NC}"
+    echo "=================================================="
+    echo "           IM.SH VPS小助手 - 帮助文档"
+    echo "=================================================="
+    echo ""
+    echo -e "${GREEN}[*] 基本导航:${NC}"
+    echo "  回车键     - 选择第一个选项（快速选择）"
+    echo "  数字       - 选择对应选项（如: 1, 2, 3）"
+    echo "  0          - 返回上一层菜单"
+    echo "  00         - 退出程序（需要输入yes确认）"
+    echo ""
+    echo -e "${GREEN}[*] 快速跳转:${NC}"
+    echo "  111        - 直接跳转到Bench.sh综合测试"
+    echo "  112        - 直接跳转到UnixBench性能测试"
+    echo "  1121       - 直接跳转到GeekBench处理器测试"
+    echo "  113        - 直接跳转到测速脚本"
+    echo "  114        - 直接跳转到网络测试"
+    echo "  1141       - 直接跳转到三网回程路由测试"
+    echo "  121        - 直接跳转到Docker安装"
+    echo "  131        - 直接跳转到系统清理"
+    echo "  数字串     - 直接跳转到对应功能"
+    echo ""
+    echo -e "${GREEN}[*] 特殊命令:${NC}"
+    echo "  help       - 显示此帮助信息"
+    echo "  menu       - 直接返回主菜单"
+    echo "  exit/bye   - 直接退出程序"
+    echo ""
+    echo -e "${GREEN}[*] 使用技巧:${NC}"
+    echo "  • 大部分情况下直接回车即可快速选择"
+    echo "  • 使用数字串可以快速跳转到深层功能"
+    echo "  • 输入0可以逐层返回，输入menu直接回主菜单"
+    echo "  • 所有命令都不区分大小写"
+    echo ""
+    echo -e "${GREEN}[*] 联系方式:${NC}"
+    echo "  网站: https://im.sh.cn"
+    echo "  GitHub: https://github.com/al90slj23/IMSH"
+    echo ""
+    read -p "按回车键返回..."
+}
+
+# 执行直接命令
+execute_direct_command() {
+    local command="$1"
+    log_info "执行直接命令: $command"
+    
+    case "$command" in
+        "111")
+            execute_bench_test
+            ;;
+        "112")
+            execute_unixbench_test
+            ;;
+        "1121")
+            execute_geekbench_test
+            ;;
+        "113")
+            execute_speed_test
+            ;;
+        "114")
+            show_network_test_menu
+            ;;
+        "1141")
+            execute_route_trace_test
+            ;;
+        "121")
+            execute_docker_install
+            ;;
+        "122")
+            execute_env_config
+            ;;
+        "123")
+            execute_software_install
+            ;;
+        "124")
+            execute_system_optimize
+            ;;
+        "131")
+            execute_system_clean
+            ;;
+        "132")
+            execute_log_manage
+            ;;
+        "133")
+            execute_backup_restore
+            ;;
+        "134")
+            execute_security_check
+            ;;
+        "141")
+            execute_performance_monitor
+            ;;
+        "142")
+            execute_resource_monitor
+            ;;
+        "143")
+            execute_service_monitor
+            ;;
+        "144")
+            execute_alert_config
+            ;;
+        "151")
+            execute_file_manage
+            ;;
+        "152")
+            execute_process_manage
+            ;;
+        "153")
+            execute_network_tools
+            ;;
+        "154")
+            execute_system_info
+            ;;
+        *)
+            log_error "未知命令: $command"
+            ;;
+    esac
+    
+    echo ""
+    read -p "按回车键继续..."
+} 

@@ -6,20 +6,48 @@
  */
 
 // 获取User-Agent
-$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 $isCurl = stripos($userAgent, 'curl') !== false;
 
 if ($isCurl) {
-    // 返回shell脚本
-    $scriptPath = dirname(__DIR__) . '/im.sh';
+    // 返回合并后的完整shell脚本
+    $scriptDir = dirname(__DIR__);
+    $mainScript = $scriptDir . '/im.sh';
+    $navModule = $scriptDir . '/sh/im.sh.nav';
+    $menuModule = $scriptDir . '/sh/im.sh.menu';
     
-    if (file_exists($scriptPath)) {
-        $script = file_get_contents($scriptPath);
+    if (file_exists($mainScript) && file_exists($navModule) && file_exists($menuModule)) {
+        // 读取主脚本
+        $script = file_get_contents($mainScript);
+        
+        // 读取模块文件
+        $navContent = file_get_contents($navModule);
+        $menuContent = file_get_contents($menuModule);
+        
+        // 移除模块文件的shebang行
+        $navContent = preg_replace('/^#!/', '# ', $navContent);
+        $menuContent = preg_replace('/^#!/', '# ', $menuContent);
+        
+        // 移除主脚本中的模块加载部分
+        $script = preg_replace('/# 加载导航模块.*?fi\n/s', '', $script);
+        $script = preg_replace('/# 加载菜单模块.*?fi\n/s', '', $script);
+        
+        // 在主脚本的适当位置插入模块内容
+        $insertPoint = strpos($script, '# 🎯 智能执行检测');
+        if ($insertPoint !== false) {
+            $beforeInsert = substr($script, 0, $insertPoint);
+            $afterInsert = substr($script, $insertPoint);
+            
+            $script = $beforeInsert . 
+                     "# ===== 导航模块 =====\n" . $navContent . "\n\n" .
+                     "# ===== 菜单模块 =====\n" . $menuContent . "\n\n" .
+                     $afterInsert;
+        }
     } else {
         $script = <<<'SCRIPT'
 #!/bin/bash
 echo "欢迎使用 IM.SH 智能安装脚本"
-echo "请在 IMSH/im.sh 中添加您的安装逻辑"
+echo "脚本文件不完整，请检查服务器配置"
 SCRIPT;
     }
     

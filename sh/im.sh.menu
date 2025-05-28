@@ -1,0 +1,614 @@
+#!/bin/bash
+
+# IM.SH 菜单模块
+# 版本: 2.0.0
+# 作者: IM.SH.CN
+
+# 主菜单
+show_main_menu() {
+    CURRENT_PATH="主菜单"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== VPS服务器小助手 ===${NC}"
+        echo ""
+        echo "1. 前辈脚本 - 经典实用脚本集合"
+        echo "2. 老几脚本 - 待补充功能"
+        echo ""
+        
+        read -p "请选择功能 [1-2]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "main"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层 (主菜单没有上一层，显示退出提示)
+                echo ""
+                echo -e "${YELLOW}已在主菜单，输入 00 退出程序${NC}"
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        show_veteran_scripts_menu
+                        ;;
+                    "2")
+                        show_old_scripts_menu
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        echo ""
+                        read -p "按回车键继续..."
+                        ;;
+                esac
+                ;;
+            3) # 返回主菜单（在主菜单中相当于重新显示）
+                continue
+                ;;
+        esac
+    done
+}
+
+# 前辈脚本菜单
+show_veteran_scripts_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 前辈脚本 ===${NC}"
+        echo ""
+        echo "1. 测试脚本 - 系统性能和网络测试"
+        echo "2. 安装脚本 - 软件和环境安装"
+        echo "3. 维护脚本 - 系统维护和清理"
+        echo "4. 监控脚本 - 系统监控和告警"
+        echo "5. 工具脚本 - 实用工具集合"
+        echo ""
+        
+        read -p "请选择功能 [1-5]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "veteran"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        show_test_scripts_menu
+                        ;;
+                    "2")
+                        show_install_scripts_menu
+                        ;;
+                    "3")
+                        show_maintenance_scripts_menu
+                        ;;
+                    "4")
+                        show_monitor_scripts_menu
+                        ;;
+                    "5")
+                        show_tool_scripts_menu
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        echo ""
+                        read -p "按回车键继续..."
+                        ;;
+                esac
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 测试脚本菜单
+show_test_scripts_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 测试脚本"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 测试脚本 ===${NC}"
+        echo ""
+        echo "1. 综合测试 - 系统全面性能评估"
+        echo "2. 硬件测试 - 硬件性能测试"
+        echo "3. 测速脚本 - 网络速度测试"
+        echo "4. 网络测试 - 网络连通性测试"
+        echo ""
+        
+        read -p "请选择功能 [1-4]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "test"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        show_comprehensive_test_menu
+                        ;;
+                    "2")
+                        show_hardware_test_menu
+                        ;;
+                    "3")
+                        execute_speed_test
+                        ;;
+                    "4")
+                        show_network_test_menu
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 综合测试菜单
+show_comprehensive_test_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 测试脚本 > 综合测试"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 综合测试 ===${NC}"
+        echo ""
+        echo "1. Bench.sh - 秋水大佬的综合性能测试"
+        echo ""
+        
+        read -p "请选择功能 [1]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "comprehensive"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_bench_test
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 硬件测试菜单
+show_hardware_test_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 测试脚本 > 硬件测试"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 硬件测试 ===${NC}"
+        echo ""
+        echo "1. UnixBench - 综合性能基准测试"
+        echo "2. GeekBench - 跨平台处理器基准测试"
+        echo ""
+        
+        read -p "请选择功能 [1-2]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "hardware"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_unixbench_test
+                        ;;
+                    "2")
+                        execute_geekbench_test
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 网络测试菜单
+show_network_test_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 测试脚本 > 网络测试"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 网络测试 ===${NC}"
+        echo ""
+        echo "1. 三网回程路由 - 一键测试三网回程路由"
+        echo "2. 网络连通性测试 - 基础网络连通性检测"
+        echo ""
+        
+        read -p "请选择功能 [1-2]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "network"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_route_trace_test
+                        ;;
+                    "2")
+                        execute_network_connectivity_test
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 安装脚本菜单
+show_install_scripts_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 安装脚本"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 安装脚本 ===${NC}"
+        echo ""
+        echo "1. Docker安装 - Docker环境一键安装"
+        echo "2. 环境配置 - 开发环境配置"
+        echo "3. 软件安装 - 常用软件安装"
+        echo "4. 系统优化 - 系统性能优化"
+        echo ""
+        
+        read -p "请选择功能 [1-4]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "install"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_docker_install
+                        ;;
+                    "2")
+                        execute_env_config
+                        ;;
+                    "3")
+                        execute_software_install
+                        ;;
+                    "4")
+                        execute_system_optimize
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 维护脚本菜单
+show_maintenance_scripts_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 维护脚本"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 维护脚本 ===${NC}"
+        echo ""
+        echo "1. 系统清理 - 清理系统垃圾文件"
+        echo "2. 日志管理 - 系统日志管理"
+        echo "3. 备份恢复 - 数据备份和恢复"
+        echo "4. 安全检查 - 系统安全检查"
+        echo ""
+        
+        read -p "请选择功能 [1-4]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "maintenance"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_system_clean
+                        ;;
+                    "2")
+                        execute_log_manage
+                        ;;
+                    "3")
+                        execute_backup_restore
+                        ;;
+                    "4")
+                        execute_security_check
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 监控脚本菜单
+show_monitor_scripts_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 监控脚本"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 监控脚本 ===${NC}"
+        echo ""
+        echo "1. 性能监控 - 系统性能实时监控"
+        echo "2. 资源监控 - 系统资源使用监控"
+        echo "3. 服务监控 - 服务状态监控"
+        echo "4. 告警设置 - 监控告警配置"
+        echo ""
+        
+        read -p "请选择功能 [1-4]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "monitor"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_performance_monitor
+                        ;;
+                    "2")
+                        execute_resource_monitor
+                        ;;
+                    "3")
+                        execute_service_monitor
+                        ;;
+                    "4")
+                        execute_alert_config
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 工具脚本菜单
+show_tool_scripts_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 工具脚本"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 工具脚本 ===${NC}"
+        echo ""
+        echo "1. 文件管理 - 文件操作工具"
+        echo "2. 进程管理 - 进程管理工具"
+        echo "3. 网络工具 - 网络诊断工具"
+        echo "4. 系统信息 - 系统信息查看"
+        echo ""
+        
+        read -p "请选择功能 [1-4]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "tools"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_file_manage
+                        ;;
+                    "2")
+                        execute_process_manage
+                        ;;
+                    "3")
+                        execute_network_tools
+                        ;;
+                    "4")
+                        execute_system_info
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 老几脚本菜单 (待补充)
+show_old_scripts_menu() {
+    CURRENT_PATH="主菜单 > 老几脚本"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 老几脚本 ===${NC}"
+        echo ""
+        echo -e "${YELLOW}此功能正在开发中，敬请期待...${NC}"
+        echo ""
+        
+        read -p "按回车键返回上一层..."
+        return
+    done
+} 
