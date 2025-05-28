@@ -210,10 +210,394 @@ execute_local_speed_test() {
     echo ""
 }
 
-execute_network_test() {
-    log_step "执行网络测试..."
-    echo "正在进行网络连通性测试..."
-    echo "此功能将集成网络诊断工具"
+execute_nexttrace_test() {
+    log_step "执行NextTrace（可视化路由追踪）..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "          NextTrace（可视化路由追踪）"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于NextTrace:${NC}"
+    echo "NextTrace是一个开源的可视化路由追踪工具，使用Golang开发，追求轻量化。"
+    echo "作者：sjlleo"
+    echo "项目地址：https://github.com/nxtrace/NTrace-core"
+    echo "官网：www.nxtrace.org"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 支持IPv4和IPv6路由追踪"
+    echo "• 可视化路由路径显示"
+    echo "• 支持ICMP、TCP、UDP协议"
+    echo "• 提供路由地图可视化"
+    echo "• 支持多种输出格式（表格、JSON、原始数据）"
+    echo "• 快速测试中国三网（电信/联通/移动/教育网）"
+    echo ""
+    echo -e "${GREEN}[*] 测试特点:${NC}"
+    echo "• 现代化的路由追踪工具"
+    echo "• 支持路由可视化地图"
+    echo "• 提供详细的地理位置信息"
+    echo "• 支持ASN和运营商信息显示"
+    echo "• 轻量化设计，性能优秀"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 测试过程可能需要1-5分钟，请耐心等待"
+    echo "• 路由可视化功能需要网络连接"
+    echo "• 某些网络环境可能影响测试准确性"
+    echo "• 工具会自动安装到系统中"
+    echo ""
+    
+    echo -e "${GREEN}[*] 测试选项:${NC}"
+    echo "1. 快速测试（中国三网）"
+    echo "2. 自定义目标测试"
+    echo "3. 安装NextTrace工具"
+    echo ""
+    
+    read -p "请选择测试类型 [1-3，默认1]: " test_choice
+    
+    # 处理空输入，默认选择第一个选项
+    if [[ -z "$test_choice" ]]; then
+        test_choice="1"
+        echo -e "${BLUE}[INFO]${NC} 默认选择: $test_choice"
+    fi
+    
+    case "$test_choice" in
+        "1")
+            echo ""
+            read -p "是否继续执行NextTrace快速测试（中国三网）？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行NextTrace快速测试..."
+                echo -e "${YELLOW}正在进行中国三网路由追踪，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl安装并执行NextTrace..."
+                    # 一键安装并执行快速测试
+                    curl nxtrace.org/nt | bash -s -- --fast-trace
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "NextTrace快速测试完成！"
+                echo ""
+                echo -e "${GREEN}[*] 测试说明:${NC}"
+                echo "• 快速测试包含了电信、联通、移动、教育网的路由追踪"
+                echo "• 结果显示了详细的路由路径和地理位置信息"
+                echo "• 可以用于快速了解网络路由状况"
+                echo ""
+            else
+                log_info "已取消NextTrace快速测试"
+            fi
+            ;;
+        "2")
+            echo ""
+            echo -e "${GREEN}[*] 自定义目标测试说明:${NC}"
+            echo "您可以输入IP地址或域名进行路由追踪测试"
+            echo "例如：1.1.1.1、google.com、baidu.com等"
+            echo ""
+            read -p "请输入要测试的目标（IP或域名）: " target
+            
+            if [[ -n "$target" ]]; then
+                echo ""
+                read -p "是否继续执行NextTrace自定义测试（目标：$target）？(y/N): " confirm
+                
+                if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                    echo ""
+                    log_info "开始执行NextTrace自定义测试..."
+                    echo -e "${YELLOW}正在追踪到 $target 的路由，请耐心等待...${NC}"
+                    echo ""
+                    
+                    if command -v curl &> /dev/null; then
+                        log_info "使用curl安装并执行NextTrace..."
+                        # 一键安装并执行自定义测试
+                        curl nxtrace.org/nt | bash -s -- --table "$target"
+                    else
+                        log_error "curl命令不可用，请先安装curl"
+                        return 1
+                    fi
+                    
+                    echo ""
+                    log_success "NextTrace自定义测试完成！"
+                    echo ""
+                    echo -e "${GREEN}[*] 测试说明:${NC}"
+                    echo "• 测试结果显示了到目标的完整路由路径"
+                    echo "• 包含每个跳点的地理位置和ASN信息"
+                    echo "• 可以用于分析特定目标的网络路径"
+                    echo ""
+                else
+                    log_info "已取消NextTrace自定义测试"
+                fi
+            else
+                log_warning "未输入测试目标，已取消测试"
+            fi
+            ;;
+        "3")
+            echo ""
+            read -p "是否继续安装NextTrace工具？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始安装NextTrace工具..."
+                echo -e "${YELLOW}正在下载并安装NextTrace，请耐心等待...${NC}"
+                echo ""
+                
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl安装NextTrace..."
+                    curl nxtrace.org/nt | bash
+                    
+                    echo ""
+                    log_success "NextTrace工具安装完成！"
+                    echo ""
+                    echo -e "${GREEN}[*] 使用说明:${NC}"
+                    echo "• 安装完成后可以直接使用 nexttrace 命令"
+                    echo "• 快速测试：nexttrace --fast-trace"
+                    echo "• 自定义测试：nexttrace --table <目标IP或域名>"
+                    echo "• 查看帮助：nexttrace --help"
+                    echo "• 更多功能请参考官方文档：www.nxtrace.org"
+                    echo ""
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+            else
+                log_info "已取消NextTrace工具安装"
+            fi
+            ;;
+        *)
+            log_warning "无效选择，已取消测试"
+            ;;
+    esac
+}
+
+execute_network_connectivity_test() {
+    log_step "执行网络连通性测试..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "              网络连通性测试"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于网络连通性测试:${NC}"
+    echo "基础的网络连通性检测，测试服务器与外部网络的连接状况。"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 测试DNS解析"
+    echo "• 测试网络延迟"
+    echo "• 测试网络连通性"
+    echo "• 检查网络配置"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 此功能正在开发中，敬请期待..."
+    echo ""
+}
+
+execute_region_restriction_check() {
+    log_step "执行RegionRestrictionCheck（流媒体测试）..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "        RegionRestrictionCheck（流媒体测试）"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于RegionRestrictionCheck:${NC}"
+    echo "流媒体解锁检测脚本，测试各种流媒体平台的地区限制情况。"
+    echo "作者：lmc999"
+    echo "项目地址：https://github.com/lmc999/RegionRestrictionCheck"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• Netflix 解锁检测"
+    echo "• Disney+ 解锁检测"
+    echo "• YouTube Premium 解锁检测"
+    echo "• Amazon Prime Video 解锁检测"
+    echo "• HBO Max 解锁检测"
+    echo "• Spotify 解锁检测"
+    echo "• TikTok 解锁检测"
+    echo "• 其他主流流媒体平台检测"
+    echo ""
+    echo -e "${GREEN}[*] 支持平台:${NC}"
+    echo "• 带有 bash 环境的任意 Unix 或类 Unix 操作系统"
+    echo "• Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux"
+    echo "• Alpine Linux, FreeBSD, MacOS 10.13+"
+    echo "• Android (Termux), iOS (iSH), Windows (MinGW/Cygwin)"
+    echo "• OpenWRT 23+ 等等"
+    echo ""
+    echo -e "${GREEN}[*] 测试特点:${NC}"
+    echo "• 纯 bash shell 实现，免 ROOT 执行"
+    echo "• 支持 IPv4 和 IPv6 双栈检测"
+    echo "• 可指定网卡和区域测试"
+    echo "• 支持多语言（中文/英文）"
+    echo "• 批量测试多个地区"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• Netflix CDN 分流测试依赖 DNS 解析"
+    echo "• VPN 代理可能影响 CDN 分流信息准确性"
+    echo "• 测试过程需要访问多个流媒体网站"
+    echo "• 建议在网络状况良好时进行测试"
+    echo ""
+    
+    echo -e "${GREEN}[*] 测试选项:${NC}"
+    echo "1. 完整测试（推荐）"
+    echo "2. 仅IPv4测试"
+    echo "3. 仅IPv6测试"
+    echo "4. 英文界面测试"
+    echo "5. 指定区域测试"
+    echo ""
+    
+    read -p "请选择测试类型 [1-5，默认1]: " test_choice
+    
+    # 处理空输入，默认选择第一个选项
+    if [[ -z "$test_choice" ]]; then
+        test_choice="1"
+        echo -e "${BLUE}[INFO]${NC} 默认选择: $test_choice"
+    fi
+    
+    case "$test_choice" in
+        "1")
+            echo ""
+            read -p "是否继续执行完整流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行完整流媒体解锁测试..."
+                echo -e "${YELLOW}正在进行流媒体解锁检测，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media)
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "完整流媒体解锁测试完成！"
+            else
+                log_info "已取消流媒体解锁测试"
+            fi
+            ;;
+        "2")
+            echo ""
+            read -p "是否继续执行IPv4流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行IPv4流媒体解锁测试..."
+                echo -e "${YELLOW}正在进行IPv4流媒体解锁检测，请耐心等待...${NC}"
+                echo ""
+                
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行IPv4流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media) -M 4
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "IPv4流媒体解锁测试完成！"
+            else
+                log_info "已取消IPv4流媒体解锁测试"
+            fi
+            ;;
+        "3")
+            echo ""
+            read -p "是否继续执行IPv6流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行IPv6流媒体解锁测试..."
+                echo -e "${YELLOW}正在进行IPv6流媒体解锁检测，请耐心等待...${NC}"
+                echo ""
+                
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行IPv6流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media) -M 6
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "IPv6流媒体解锁测试完成！"
+            else
+                log_info "已取消IPv6流媒体解锁测试"
+            fi
+            ;;
+        "4")
+            echo ""
+            read -p "是否继续执行英文界面流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行英文界面流媒体解锁测试..."
+                echo -e "${YELLOW}正在进行英文界面流媒体解锁检测，请耐心等待...${NC}"
+                echo ""
+                
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行英文界面流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media) -E en
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "英文界面流媒体解锁测试完成！"
+            else
+                log_info "已取消英文界面流媒体解锁测试"
+            fi
+            ;;
+        "5")
+            echo ""
+            echo -e "${GREEN}[*] 区域选择说明:${NC}"
+            echo "如果不指定区域编号或区域编号为空，脚本会显示区域选择菜单"
+            echo "您可以在脚本运行时选择要测试的具体区域"
+            echo ""
+            read -p "是否继续执行指定区域流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行指定区域流媒体解锁测试..."
+                echo -e "${YELLOW}正在启动流媒体解锁检测，请在菜单中选择区域...${NC}"
+                echo ""
+                
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行指定区域流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media) -R 0
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "指定区域流媒体解锁测试完成！"
+            else
+                log_info "已取消指定区域流媒体解锁测试"
+            fi
+            ;;
+        *)
+            log_warning "无效选择，已取消测试"
+            ;;
+    esac
+    
+    echo ""
+    echo -e "${GREEN}[*] 测试说明:${NC}"
+    echo "• 测试结果显示了各个流媒体平台的解锁状况"
+    echo "• 'Yes' 表示可以正常访问该平台"
+    echo "• 'No' 表示受到地区限制无法访问"
+    echo "• 'Failed' 表示测试过程中出现错误"
+    echo "• 建议保存测试结果以备后续参考"
+    echo ""
+    echo -e "${GREEN}[*] Docker 替代方案:${NC}"
+    echo "如果脚本执行有问题，也可以使用 Docker 版本："
+    echo "docker run --rm -ti --net=host lmc999/regioncheck"
+    echo ""
 }
 
 execute_hardware_test() {
@@ -717,229 +1101,288 @@ execute_besttrace_test() {
     fi
 }
 
-execute_network_connectivity_test() {
-    log_step "执行网络连通性测试..."
-    echo ""
-    echo -e "${CYAN}=================================================="
-    echo "              网络连通性测试"
-    echo "=================================================="
-    echo -e "${NC}"
-    echo ""
-    echo -e "${GREEN}[*] 关于网络连通性测试:${NC}"
-    echo "基础的网络连通性检测，测试服务器与外部网络的连接状况。"
-    echo ""
-    echo -e "${GREEN}[*] 主要功能:${NC}"
-    echo "• 测试DNS解析"
-    echo "• 测试网络延迟"
-    echo "• 测试网络连通性"
-    echo "• 检查网络配置"
-    echo ""
-    echo -e "${YELLOW}[!] 注意事项:${NC}"
-    echo "• 此功能正在开发中，敬请期待..."
-    echo ""
-}
+# 网络优化相关函数
 
-execute_region_restriction_check() {
-    log_step "执行RegionRestrictionCheck（流媒体测试）..."
+execute_netspeed_optimization() {
+    log_step "执行NetSpeed（Linux网络加速一键脚本）..."
     echo ""
     echo -e "${CYAN}=================================================="
-    echo "        RegionRestrictionCheck（流媒体测试）"
+    echo "        NetSpeed（Linux网络加速一键脚本）"
     echo "=================================================="
     echo -e "${NC}"
     echo ""
-    echo -e "${GREEN}[*] 关于RegionRestrictionCheck:${NC}"
-    echo "流媒体解锁检测脚本，测试各种流媒体平台的地区限制情况。"
-    echo "作者：lmc999"
-    echo "项目地址：https://github.com/lmc999/RegionRestrictionCheck"
+    echo -e "${GREEN}[*] 关于NetSpeed:${NC}"
+    echo "NetSpeed是一个Linux网络加速一键脚本，支持BBR、锐速等多种TCP拥塞控制算法。"
+    echo "作者：ylx2016"
+    echo "项目地址：https://github.com/ylx2016/Linux-NetSpeed"
     echo ""
     echo -e "${GREEN}[*] 主要功能:${NC}"
-    echo "• Netflix 解锁检测"
-    echo "• Disney+ 解锁检测"
-    echo "• YouTube Premium 解锁检测"
-    echo "• Amazon Prime Video 解锁检测"
-    echo "• HBO Max 解锁检测"
-    echo "• Spotify 解锁检测"
-    echo "• TikTok 解锁检测"
-    echo "• 其他主流流媒体平台检测"
+    echo "• BBR 原版/魔改版/Plus版本"
+    echo "• 锐速（ServerSpeeder）"
+    echo "• BBR + 锐速双重加速"
+    echo "• 内核升级和优化"
+    echo "• 支持CentOS、Debian、Ubuntu系统"
+    echo "• 自动检测系统环境"
     echo ""
-    echo -e "${GREEN}[*] 支持平台:${NC}"
-    echo "• 带有 bash 环境的任意 Unix 或类 Unix 操作系统"
-    echo "• Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux"
-    echo "• Alpine Linux, FreeBSD, MacOS 10.13+"
-    echo "• Android (Termux), iOS (iSH), Windows (MinGW/Cygwin)"
-    echo "• OpenWRT 23+ 等等"
-    echo ""
-    echo -e "${GREEN}[*] 测试特点:${NC}"
-    echo "• 纯 bash shell 实现，免 ROOT 执行"
-    echo "• 支持 IPv4 和 IPv6 双栈检测"
-    echo "• 可指定网卡和区域测试"
-    echo "• 支持多语言（中文/英文）"
-    echo "• 批量测试多个地区"
+    echo -e "${GREEN}[*] 支持的算法:${NC}"
+    echo "• BBR 原版 - Google开发的拥塞控制算法"
+    echo "• BBR 魔改版 - 优化版BBR算法"
+    echo "• BBR Plus - 增强版BBR算法"
+    echo "• 锐速 - 商业级TCP加速方案"
+    echo "• Hybla - 适合高延迟网络"
+    echo "• CUBIC - Linux默认算法"
     echo ""
     echo -e "${YELLOW}[!] 注意事项:${NC}"
-    echo "• Netflix CDN 分流测试依赖 DNS 解析"
-    echo "• VPN 代理可能影响 CDN 分流信息准确性"
-    echo "• 测试过程需要访问多个流媒体网站"
-    echo "• 建议在网络状况良好时进行测试"
+    echo "• 脚本会自动安装所需内核，可能需要重启系统"
+    echo "• 建议在纯净系统上使用，避免冲突"
+    echo "• 锐速需要特定内核版本支持"
+    echo "• 请确保有足够的磁盘空间（至少1GB）"
+    echo "• 操作前建议备份重要数据"
     echo ""
     
-    echo -e "${GREEN}[*] 测试选项:${NC}"
-    echo "1. 完整测试（推荐）"
-    echo "2. 仅IPv4测试"
-    echo "3. 仅IPv6测试"
-    echo "4. 英文界面测试"
-    echo "5. 指定区域测试"
+    echo -e "${GREEN}[*] 脚本版本选择:${NC}"
+    echo "1. tcpx.sh - 不卸载内核版本（推荐）"
+    echo "2. tcp.sh - 卸载内核版本"
+    echo "3. 查看系统信息"
     echo ""
     
-    read -p "请选择测试类型 [1-5，默认1]: " test_choice
+    read -p "请选择脚本版本 [1-3，默认1]: " script_choice
     
     # 处理空输入，默认选择第一个选项
-    if [[ -z "$test_choice" ]]; then
-        test_choice="1"
-        echo -e "${BLUE}[INFO]${NC} 默认选择: $test_choice"
+    if [[ -z "$script_choice" ]]; then
+        script_choice="1"
+        echo -e "${BLUE}[INFO]${NC} 默认选择: $script_choice"
     fi
     
-    case "$test_choice" in
+    case "$script_choice" in
         "1")
             echo ""
-            read -p "是否继续执行完整流媒体解锁测试？(y/N): " confirm
+            echo -e "${GREEN}[*] 选择：tcpx.sh（不卸载内核版本）${NC}"
+            echo "此版本会保留现有内核，更加安全。"
+            echo ""
+            read -p "是否继续执行NetSpeed TCP优化？(y/N): " confirm
             
             if [[ "$confirm" =~ ^[Yy]$ ]]; then
                 echo ""
-                log_info "开始执行完整流媒体解锁测试..."
-                echo -e "${YELLOW}正在进行流媒体解锁检测，请耐心等待...${NC}"
+                log_info "开始执行NetSpeed TCP优化（tcpx.sh版本）..."
+                echo -e "${YELLOW}正在下载并执行脚本，请耐心等待...${NC}"
                 echo ""
                 
-                # 检查curl是否可用
-                if command -v curl &> /dev/null; then
-                    log_info "使用curl执行流媒体测试脚本..."
-                    bash <(curl -L -s check.unlock.media)
+                # 预先准备依赖
+                log_info "正在安装必要依赖..."
+                if command -v yum &> /dev/null; then
+                    # CentOS/RHEL
+                    yum install ca-certificates wget -y && update-ca-trust force-enable
+                elif command -v apt-get &> /dev/null; then
+                    # Debian/Ubuntu
+                    apt-get update && apt-get install ca-certificates wget -y && update-ca-certificates
+                fi
+                
+                # 下载并执行脚本
+                if command -v wget &> /dev/null; then
+                    log_info "使用wget下载NetSpeed脚本..."
+                    wget -O tcpx.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcpx.sh" && chmod +x tcpx.sh && ./tcpx.sh
+                elif command -v curl &> /dev/null; then
+                    log_info "使用curl下载NetSpeed脚本..."
+                    curl -o tcpx.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcpx.sh" && chmod +x tcpx.sh && ./tcpx.sh
                 else
-                    log_error "curl命令不可用，请先安装curl"
+                    log_error "wget和curl命令都不可用，请先安装其中一个"
                     return 1
                 fi
                 
                 echo ""
-                log_success "完整流媒体解锁测试完成！"
+                log_success "NetSpeed TCP优化脚本执行完成！"
+                echo ""
+                echo -e "${GREEN}[*] 使用说明:${NC}"
+                echo "• 如果安装了新内核，系统可能需要重启"
+                echo "• 重启后可以使用以下命令检查状态："
+                echo "  lsmod | grep bbr                    # 检查BBR状态"
+                echo "  cat /proc/sys/net/ipv4/tcp_congestion_control  # 查看当前算法"
+                echo "• 脚本文件已保存为 tcpx.sh，可重复使用"
+                echo ""
             else
-                log_info "已取消流媒体解锁测试"
+                log_info "已取消NetSpeed TCP优化"
             fi
             ;;
         "2")
             echo ""
-            read -p "是否继续执行IPv4流媒体解锁测试？(y/N): " confirm
+            echo -e "${GREEN}[*] 选择：tcp.sh（卸载内核版本）${NC}"
+            echo -e "${YELLOW}[!] 警告：此版本会卸载多余内核，请谨慎使用！${NC}"
+            echo ""
+            read -p "确定要使用卸载内核版本吗？(y/N): " confirm
             
             if [[ "$confirm" =~ ^[Yy]$ ]]; then
                 echo ""
-                log_info "开始执行IPv4流媒体解锁测试..."
-                echo -e "${YELLOW}正在进行IPv4流媒体解锁检测，请耐心等待...${NC}"
+                log_info "开始执行NetSpeed TCP优化（tcp.sh版本）..."
+                echo -e "${YELLOW}正在下载并执行脚本，请耐心等待...${NC}"
                 echo ""
                 
-                if command -v curl &> /dev/null; then
-                    log_info "使用curl执行IPv4流媒体测试脚本..."
-                    bash <(curl -L -s check.unlock.media) -M 4
+                # 预先准备依赖
+                log_info "正在安装必要依赖..."
+                if command -v yum &> /dev/null; then
+                    # CentOS/RHEL
+                    yum install ca-certificates wget -y && update-ca-trust force-enable
+                elif command -v apt-get &> /dev/null; then
+                    # Debian/Ubuntu
+                    apt-get update && apt-get install ca-certificates wget -y && update-ca-certificates
+                fi
+                
+                # 下载并执行脚本
+                if command -v wget &> /dev/null; then
+                    log_info "使用wget下载NetSpeed脚本..."
+                    wget -O tcp.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
+                elif command -v curl &> /dev/null; then
+                    log_info "使用curl下载NetSpeed脚本..."
+                    curl -o tcp.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
                 else
-                    log_error "curl命令不可用，请先安装curl"
+                    log_error "wget和curl命令都不可用，请先安装其中一个"
                     return 1
                 fi
                 
                 echo ""
-                log_success "IPv4流媒体解锁测试完成！"
+                log_success "NetSpeed TCP优化脚本执行完成！"
+                echo ""
+                echo -e "${GREEN}[*] 使用说明:${NC}"
+                echo "• 如果安装了新内核，系统可能需要重启"
+                echo "• 重启后可以使用以下命令检查状态："
+                echo "  lsmod | grep bbr                    # 检查BBR状态"
+                echo "  cat /proc/sys/net/ipv4/tcp_congestion_control  # 查看当前算法"
+                echo "• 脚本文件已保存为 tcp.sh，可重复使用"
+                echo ""
             else
-                log_info "已取消IPv4流媒体解锁测试"
+                log_info "已取消NetSpeed TCP优化"
             fi
             ;;
         "3")
             echo ""
-            read -p "是否继续执行IPv6流媒体解锁测试？(y/N): " confirm
-            
-            if [[ "$confirm" =~ ^[Yy]$ ]]; then
-                echo ""
-                log_info "开始执行IPv6流媒体解锁测试..."
-                echo -e "${YELLOW}正在进行IPv6流媒体解锁检测，请耐心等待...${NC}"
-                echo ""
-                
-                if command -v curl &> /dev/null; then
-                    log_info "使用curl执行IPv6流媒体测试脚本..."
-                    bash <(curl -L -s check.unlock.media) -M 6
-                else
-                    log_error "curl命令不可用，请先安装curl"
-                    return 1
-                fi
-                
-                echo ""
-                log_success "IPv6流媒体解锁测试完成！"
-            else
-                log_info "已取消IPv6流媒体解锁测试"
-            fi
-            ;;
-        "4")
+            echo -e "${GREEN}[*] 系统信息检查${NC}"
             echo ""
-            read -p "是否继续执行英文界面流媒体解锁测试？(y/N): " confirm
-            
-            if [[ "$confirm" =~ ^[Yy]$ ]]; then
-                echo ""
-                log_info "开始执行英文界面流媒体解锁测试..."
-                echo -e "${YELLOW}正在进行英文界面流媒体解锁检测，请耐心等待...${NC}"
-                echo ""
-                
-                if command -v curl &> /dev/null; then
-                    log_info "使用curl执行英文界面流媒体测试脚本..."
-                    bash <(curl -L -s check.unlock.media) -E en
-                else
-                    log_error "curl命令不可用，请先安装curl"
-                    return 1
-                fi
-                
-                echo ""
-                log_success "英文界面流媒体解锁测试完成！"
-            else
-                log_info "已取消英文界面流媒体解锁测试"
-            fi
-            ;;
-        "5")
+            echo "当前系统信息："
+            echo "• 系统版本：$(cat /etc/os-release | grep PRETTY_NAME | cut -d'"' -f2 2>/dev/null || echo '未知')"
+            echo "• 内核版本：$(uname -r)"
+            echo "• 系统架构：$(uname -m)"
             echo ""
-            echo -e "${GREEN}[*] 区域选择说明:${NC}"
-            echo "如果不指定区域编号或区域编号为空，脚本会显示区域选择菜单"
-            echo "您可以在脚本运行时选择要测试的具体区域"
+            echo "网络相关信息："
+            echo "• 当前TCP算法：$(cat /proc/sys/net/ipv4/tcp_congestion_control 2>/dev/null || echo '未知')"
+            echo "• 支持的算法：$(cat /proc/sys/net/ipv4/tcp_allowed_congestion_control 2>/dev/null || echo '未知')"
+            echo "• 当前队列算法：$(sysctl net.core.default_qdisc 2>/dev/null | cut -d'=' -f2 | tr -d ' ' || echo '未知')"
             echo ""
-            read -p "是否继续执行指定区域流媒体解锁测试？(y/N): " confirm
-            
-            if [[ "$confirm" =~ ^[Yy]$ ]]; then
-                echo ""
-                log_info "开始执行指定区域流媒体解锁测试..."
-                echo -e "${YELLOW}正在启动流媒体解锁检测，请在菜单中选择区域...${NC}"
-                echo ""
-                
-                if command -v curl &> /dev/null; then
-                    log_info "使用curl执行指定区域流媒体测试脚本..."
-                    bash <(curl -L -s check.unlock.media) -R 0
-                else
-                    log_error "curl命令不可用，请先安装curl"
-                    return 1
-                fi
-                
-                echo ""
-                log_success "指定区域流媒体解锁测试完成！"
+            if lsmod | grep -q bbr; then
+                echo "• BBR状态：已加载"
             else
-                log_info "已取消指定区域流媒体解锁测试"
+                echo "• BBR状态：未加载"
             fi
+            echo ""
             ;;
         *)
-            log_warning "无效选择，已取消测试"
+            log_warning "无效选择，已取消操作"
             ;;
     esac
+}
+
+execute_kernel_upgrade() {
+    log_step "执行内核升级..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "              系统内核升级优化"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于内核升级:${NC}"
+    echo "系统内核升级可以获得更好的性能和安全性，支持更多新特性。"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 升级到最新稳定内核"
+    echo "• 支持BBR等新特性"
+    echo "• 提升系统性能和安全性"
+    echo "• 自动配置启动项"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 此功能正在开发中，敬请期待..."
+    echo "• 推荐使用NetSpeed脚本进行内核优化"
+    echo ""
+}
+
+execute_ip_quality_check() {
+    log_step "执行IP质检..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "              IP地址质量检测"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于IP质检:${NC}"
+    echo "IP质检可以检测您的服务器IP地址的质量，包括地理位置、运营商、风险等级等信息。"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• IP地理位置检测"
+    echo "• 运营商信息查询"
+    echo "• IP风险等级评估"
+    echo "• 黑名单检查"
+    echo "• 网络质量测试"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 检测过程需要访问外部API"
+    echo "• 结果仅供参考"
+    echo "• 可能需要几分钟时间"
+    echo ""
     
+    read -p "是否继续执行IP质检？(y/N): " confirm
+    
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        echo ""
+        log_info "开始执行IP质检..."
+        echo -e "${YELLOW}正在检测IP地址质量，请耐心等待...${NC}"
+        echo ""
+        
+        # 检查curl是否可用
+        if command -v curl &> /dev/null; then
+            log_info "使用curl执行IP质检脚本..."
+            bash <(curl -Ls IP.Check.Place)
+        else
+            log_error "curl命令不可用，请先安装curl"
+            return 1
+        fi
+        
+        echo ""
+        log_success "IP质检完成！"
+        echo ""
+        echo -e "${GREEN}[*] 检测说明:${NC}"
+        echo "• 检测结果显示了IP的详细信息"
+        echo "• 可以用于评估服务器IP质量"
+        echo "• 建议保存检测结果以备参考"
+        echo ""
+    else
+        log_info "已取消IP质检"
+    fi
+}
+
+execute_dd_reinstall() {
+    log_step "执行系统重装（DD脚本）..."
     echo ""
-    echo -e "${GREEN}[*] 测试说明:${NC}"
-    echo "• 测试结果显示了各个流媒体平台的解锁状况"
-    echo "• 'Yes' 表示可以正常访问该平台"
-    echo "• 'No' 表示受到地区限制无法访问"
-    echo "• 'Failed' 表示测试过程中出现错误"
-    echo "• 建议保存测试结果以备后续参考"
+    echo -e "${CYAN}=================================================="
+    echo "              DD脚本一键重装系统"
+    echo "=================================================="
+    echo -e "${NC}"
     echo ""
-    echo -e "${GREEN}[*] Docker 替代方案:${NC}"
-    echo "如果脚本执行有问题，也可以使用 Docker 版本："
-    echo "docker run --rm -ti --net=host lmc999/regioncheck"
+    echo -e "${GREEN}[*] 关于DD脚本:${NC}"
+    echo "DD脚本可以一键重装Linux系统，支持多种发行版和版本。"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 一键重装各种Linux发行版"
+    echo "• 支持自定义系统镜像"
+    echo "• 网络重装，无需物理接触"
+    echo "• 自动配置网络和SSH"
+    echo ""
+    echo -e "${RED}[!] 重要警告:${NC}"
+    echo "• DD重装会完全格式化硬盘，所有数据将丢失！"
+    echo "• 请务必备份重要数据后再操作！"
+    echo "• 操作不可逆，请谨慎使用！"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 此功能正在开发中，敬请期待..."
+    echo "• 推荐使用官方重装功能或联系服务商"
+    echo "• 相关脚本：https://git.beta.gs/"
+    echo "• 备用脚本：https://www.cxthhhhh.com/network-reinstall-system-modify"
     echo ""
 } 

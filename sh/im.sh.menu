@@ -364,10 +364,11 @@ show_network_test_menu() {
         echo "1. mtr_trace（回程国内三网路由） by zhucaidan"
         echo "2. besttrace（一键回程测试脚本） by zq"
         echo "3. RegionRestrictionCheck（流媒体测试） by lmc999"
-        echo "4. 网络连通性测试 - 基础网络连通性检测"
+        echo "4. NextTrace（可视化路由追踪） by sjlleo"
+        echo "5. 网络连通性测试 - 基础网络连通性检测"
         echo ""
         
-        read -p "请选择功能 [1-4]: " choice
+        read -p "请选择功能 [1-5]: " choice
         
         # 处理空输入，默认选择第一个选项
         if [[ -z "$choice" ]]; then
@@ -397,6 +398,9 @@ show_network_test_menu() {
                         execute_region_restriction_check
                         ;;
                     "4")
+                        execute_nexttrace_test
+                        ;;
+                    "5")
                         execute_network_connectivity_test
                         ;;
                     *)
@@ -423,13 +427,14 @@ show_install_scripts_menu() {
         
         echo -e "${GREEN}=== 安装脚本 ===${NC}"
         echo ""
-        echo "1. Docker安装 - Docker环境一键安装"
-        echo "2. 环境配置 - 开发环境配置"
-        echo "3. 软件安装 - 常用软件安装"
-        echo "4. 系统优化 - 系统性能优化"
+        echo "1. 网络优化 - TCP加速和内核优化"
+        echo "2. Docker安装 - Docker环境一键安装"
+        echo "3. 环境配置 - 开发环境配置"
+        echo "4. 软件安装 - 常用软件安装"
+        echo "5. 系统优化 - 系统性能优化"
         echo ""
         
-        read -p "请选择功能 [1-4]: " choice
+        read -p "请选择功能 [1-5]: " choice
         
         # 处理空输入，默认选择第一个选项
         if [[ -z "$choice" ]]; then
@@ -450,15 +455,18 @@ show_install_scripts_menu() {
             2) # 处理选择
                 case "$choice" in
                     "1")
-                        execute_docker_install
+                        show_network_optimization_menu
                         ;;
                     "2")
-                        execute_env_config
+                        execute_docker_install
                         ;;
                     "3")
-                        execute_software_install
+                        execute_env_config
                         ;;
                     "4")
+                        execute_software_install
+                        ;;
+                    "5")
                         execute_system_optimize
                         ;;
                     *)
@@ -676,5 +684,117 @@ show_old_scripts_menu() {
         
         read -p "按回车键返回上一层..."
         return
+    done
+}
+
+# 网络优化菜单
+show_network_optimization_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 安装脚本 > 网络优化"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 网络优化 ===${NC}"
+        echo ""
+        echo "1. TCP优化（BBR/锐速） - NetSpeed网络加速脚本"
+        echo "2. 内核升级 - 系统内核升级优化"
+        echo "3. IP质检 - IP地址质量检测"
+        echo "4. 系统重装 - DD脚本一键重装系统"
+        echo ""
+        
+        read -p "请选择功能 [1-4]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "network_opt"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        show_tcp_optimization_menu
+                        ;;
+                    "2")
+                        execute_kernel_upgrade
+                        ;;
+                    "3")
+                        execute_ip_quality_check
+                        ;;
+                    "4")
+                        execute_dd_reinstall
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# TCP优化菜单
+show_tcp_optimization_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 安装脚本 > 网络优化 > TCP优化"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== TCP优化（BBR/锐速） ===${NC}"
+        echo ""
+        echo "1. NetSpeed（Linux网络加速一键脚本） by ylx2016"
+        echo ""
+        
+        read -p "请选择功能 [1]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "tcp_opt"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_netspeed_optimization
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
     done
 } 

@@ -102,8 +102,11 @@ show_help() {
     echo "  1141       - 直接跳转到mtr_trace（回程国内三网路由）"
     echo "  1142       - 直接跳转到besttrace（一键回程测试脚本）"
     echo "  1143       - 直接跳转到RegionRestrictionCheck（流媒体测试）"
-    echo "  1144       - 直接跳转到网络连通性测试"
-    echo "  121        - 直接跳转到Docker安装"
+    echo "  1144       - 直接跳转到NextTrace（可视化路由追踪）"
+    echo "  1145       - 直接跳转到网络连通性测试"
+    echo "  121        - 直接跳转到网络优化"
+    echo "  1211       - 直接跳转到NetSpeed（TCP优化）"
+    echo "  122        - 直接跳转到Docker安装"
     echo "  131        - 直接跳转到系统清理"
     echo "  数字串     - 直接跳转到对应功能"
     echo ""
@@ -165,18 +168,27 @@ execute_direct_command() {
             execute_region_restriction_check
             ;;
         "1144")
+            execute_nexttrace_test
+            ;;
+        "1145")
             execute_network_connectivity_test
             ;;
         "121")
-            execute_docker_install
+            show_network_optimization_menu
+            ;;
+        "1211")
+            execute_netspeed_optimization
             ;;
         "122")
-            execute_env_config
+            execute_docker_install
             ;;
         "123")
-            execute_software_install
+            execute_env_config
             ;;
         "124")
+            execute_software_install
+            ;;
+        "125")
             execute_system_optimize
             ;;
         "131")

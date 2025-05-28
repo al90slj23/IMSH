@@ -16,10 +16,13 @@ curl im.sh.cn | bash
 ### 🔧 快速跳转功能
 ```bash
 curl im.sh.cn | bash -s -- 111   # Bench.sh综合测试
+curl im.sh.cn | bash -s -- 121   # 网络优化菜单
+curl im.sh.cn | bash -s -- 1211  # NetSpeed TCP优化
 curl im.sh.cn | bash -s -- 1131  # SpeedTestCN国内三网测速
 curl im.sh.cn | bash -s -- 1141  # mtr_trace回程路由测试
 curl im.sh.cn | bash -s -- 1142  # besttrace一键回程测试
 curl im.sh.cn | bash -s -- 1143  # RegionRestrictionCheck流媒体测试
+curl im.sh.cn | bash -s -- 1144  # NextTrace可视化路由追踪
 ```
 
 ### 🔄 下载后运行
@@ -135,16 +138,50 @@ curl -L http://im.sh.cn | bash
   - TikTok 解锁检测
   - 支持IPv4/IPv6双栈检测
   - 支持多语言界面
-- **1144** - **网络连通性测试**
+- **1144** - **NextTrace（可视化路由追踪） by sjlleo**
+  - 现代化路由追踪工具
+  - 支持IPv4/IPv6双栈
+  - 可视化路由地图
+  - 支持ICMP/TCP/UDP协议
+  - 多种输出格式（表格、JSON、原始数据）
+  - 快速测试中国三网
+  - 详细地理位置和ASN信息
+  - 轻量化Golang实现
+- **1145** - **网络连通性测试**
   - DNS解析测试
   - 端口连通性测试
   - 网络延迟测试
 
 ### 🔧 安装脚本
-- **121** - **Docker安装** - Docker环境一键安装
-- **122** - **环境配置** - 开发环境配置
-- **123** - **软件安装** - 常用软件安装
-- **124** - **系统优化** - 系统性能优化
+- **121** - **网络优化 - TCP加速和内核优化**
+  - **NetSpeed** - ylx2016开发的Linux网络加速一键脚本
+    - 项目地址: https://github.com/ylx2016/Linux-NetSpeed
+    - 功能: BBR/锐速等TCP拥塞控制算法优化
+    - 特点: 支持多种算法、自动内核升级、双重加速
+    - 版本: tcpx.sh（保留内核）、tcp.sh（清理内核）
+  - 内核升级优化
+  - IP质检工具
+  - DD脚本系统重装
+- **122** - **Docker安装 - Docker环境一键安装**
+  - Docker CE安装
+  - Docker Compose安装
+  - 容器环境配置
+  - 镜像加速配置
+- **123** - **环境配置 - 开发环境配置**
+  - 编程语言环境
+  - 开发工具安装
+  - 环境变量配置
+  - 依赖包管理
+- **124** - **软件安装 - 常用软件安装**
+  - 系统工具安装
+  - 网络工具安装
+  - 监控工具安装
+  - 安全工具安装
+- **125** - **系统优化 - 系统性能优化**
+  - 内核参数优化
+  - 文件系统优化
+  - 网络参数调优
+  - 安全配置优化
 
 ### 🧹 维护脚本
 - **131** - **系统清理** - 清理系统垃圾文件
@@ -253,6 +290,11 @@ imsh/
 - **besttrace** - zq开发的一键回程测试脚本
   - 项目地址: https://github.com/zq/besttrace
   - 功能: 8个节点回程测试、详细路由信息
+- **NextTrace** - sjlleo开发的可视化路由追踪工具
+  - 项目地址: https://github.com/nxtrace/NTrace-core
+  - 官网: https://www.nxtrace.org
+  - 功能: 现代化路由追踪、可视化地图、多协议支持
+  - 特点: Golang实现、轻量化设计、支持IPv4/IPv6双栈
 
 ### 流媒体测试脚本
 - **RegionRestrictionCheck** - lmc999开发的流媒体解锁检测脚本
@@ -494,9 +536,11 @@ execute_my_custom_test() {
 感谢以下开发者的优秀脚本：
 - **秋水大佬** - Bench.sh综合性能测试、UnixBench优化版本
 - **BlueSkyXN** - SpeedTestCN国内三网测速
+- **ylx2016** - NetSpeed Linux网络加速一键脚本
 - **zhucaidan** - mtr_trace回程路由测试
 - **zq** - besttrace一键回程测试脚本
 - **lmc999** - RegionRestrictionCheck流媒体解锁检测
+- **sjlleo** - NextTrace可视化路由追踪工具
 - **YABS团队** - GeekBench集成支持
 - **bench.monster** - 国外测速服务
 
@@ -524,4 +568,5 @@ execute_my_custom_test() {
 - `1141` - mtr_trace回程路由测试
 - `1142` - besttrace一键回程测试
 - `1143` - RegionRestrictionCheck流媒体测试
-- `1144` - 网络连通性测试 
+- `1144` - NextTrace可视化路由追踪
+- `1145` - 网络连通性测试 
