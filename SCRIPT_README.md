@@ -19,6 +19,7 @@ curl im.sh.cn | bash -s -- 111   # Bench.sh综合测试
 curl im.sh.cn | bash -s -- 1131  # SpeedTestCN国内三网测速
 curl im.sh.cn | bash -s -- 1141  # mtr_trace回程路由测试
 curl im.sh.cn | bash -s -- 1142  # besttrace一键回程测试
+curl im.sh.cn | bash -s -- 1143  # RegionRestrictionCheck流媒体测试
 ```
 
 ### 🔄 下载后运行
@@ -124,7 +125,17 @@ curl -L http://im.sh.cn | bash
   - 详细路由信息
   - 延迟分析
   - 网络质量评估
-- **1143** - **网络连通性测试**
+- **1143** - **RegionRestrictionCheck（流媒体测试） by lmc999**
+  - Netflix 解锁检测
+  - Disney+ 解锁检测
+  - YouTube Premium 解锁检测
+  - Amazon Prime Video 解锁检测
+  - HBO Max 解锁检测
+  - Spotify 解锁检测
+  - TikTok 解锁检测
+  - 支持IPv4/IPv6双栈检测
+  - 支持多语言界面
+- **1144** - **网络连通性测试**
   - DNS解析测试
   - 端口连通性测试
   - 网络延迟测试
@@ -242,6 +253,12 @@ imsh/
 - **besttrace** - zq开发的一键回程测试脚本
   - 项目地址: https://github.com/zq/besttrace
   - 功能: 8个节点回程测试、详细路由信息
+
+### 流媒体测试脚本
+- **RegionRestrictionCheck** - lmc999开发的流媒体解锁检测脚本
+  - 项目地址: https://github.com/lmc999/RegionRestrictionCheck
+  - 功能: Netflix、Disney+、YouTube Premium等主流流媒体平台解锁检测
+  - 特点: 支持IPv4/IPv6双栈、多语言界面、免ROOT执行
 
 ## 📊 测试结果示例
 
@@ -479,6 +496,7 @@ execute_my_custom_test() {
 - **BlueSkyXN** - SpeedTestCN国内三网测速
 - **zhucaidan** - mtr_trace回程路由测试
 - **zq** - besttrace一键回程测试脚本
+- **lmc999** - RegionRestrictionCheck流媒体解锁检测
 - **YABS团队** - GeekBench集成支持
 - **bench.monster** - 国外测速服务
 
@@ -495,3 +513,15 @@ execute_my_custom_test() {
 **🚀 IM.SH - 让VPS测试变得简单！**
 
 > 一行命令，全面测试。性能、网络、系统，一个脚本搞定！ 
+
+### 🚀 快速跳转编号
+- `111` - Bench.sh综合测试
+- `112` - UnixBench性能测试
+- `1121` - GeekBench处理器测试
+- `1131` - SpeedTestCN国内三网测速
+- `1132` - bench.monster国外测速
+- `1133` - 本地测速
+- `1141` - mtr_trace回程路由测试
+- `1142` - besttrace一键回程测试
+- `1143` - RegionRestrictionCheck流媒体测试
+- `1144` - 网络连通性测试 

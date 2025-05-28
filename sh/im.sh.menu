@@ -363,10 +363,11 @@ show_network_test_menu() {
         echo ""
         echo "1. mtr_trace（回程国内三网路由） by zhucaidan"
         echo "2. besttrace（一键回程测试脚本） by zq"
-        echo "3. 网络连通性测试 - 基础网络连通性检测"
+        echo "3. RegionRestrictionCheck（流媒体测试） by lmc999"
+        echo "4. 网络连通性测试 - 基础网络连通性检测"
         echo ""
         
-        read -p "请选择功能 [1-3]: " choice
+        read -p "请选择功能 [1-4]: " choice
         
         # 处理空输入，默认选择第一个选项
         if [[ -z "$choice" ]]; then
@@ -393,6 +394,9 @@ show_network_test_menu() {
                         execute_besttrace_test
                         ;;
                     "3")
+                        execute_region_restriction_check
+                        ;;
+                    "4")
                         execute_network_connectivity_test
                         ;;
                     *)

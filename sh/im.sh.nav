@@ -101,6 +101,8 @@ show_help() {
     echo "  114        - 直接跳转到网络测试"
     echo "  1141       - 直接跳转到mtr_trace（回程国内三网路由）"
     echo "  1142       - 直接跳转到besttrace（一键回程测试脚本）"
+    echo "  1143       - 直接跳转到RegionRestrictionCheck（流媒体测试）"
+    echo "  1144       - 直接跳转到网络连通性测试"
     echo "  121        - 直接跳转到Docker安装"
     echo "  131        - 直接跳转到系统清理"
     echo "  数字串     - 直接跳转到对应功能"
@@ -158,6 +160,12 @@ execute_direct_command() {
             ;;
         "1142")
             execute_besttrace_test
+            ;;
+        "1143")
+            execute_region_restriction_check
+            ;;
+        "1144")
+            execute_network_connectivity_test
             ;;
         "121")
             execute_docker_install

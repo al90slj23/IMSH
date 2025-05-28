@@ -737,4 +737,209 @@ execute_network_connectivity_test() {
     echo -e "${YELLOW}[!] 注意事项:${NC}"
     echo "• 此功能正在开发中，敬请期待..."
     echo ""
+}
+
+execute_region_restriction_check() {
+    log_step "执行RegionRestrictionCheck（流媒体测试）..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "        RegionRestrictionCheck（流媒体测试）"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于RegionRestrictionCheck:${NC}"
+    echo "流媒体解锁检测脚本，测试各种流媒体平台的地区限制情况。"
+    echo "作者：lmc999"
+    echo "项目地址：https://github.com/lmc999/RegionRestrictionCheck"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• Netflix 解锁检测"
+    echo "• Disney+ 解锁检测"
+    echo "• YouTube Premium 解锁检测"
+    echo "• Amazon Prime Video 解锁检测"
+    echo "• HBO Max 解锁检测"
+    echo "• Spotify 解锁检测"
+    echo "• TikTok 解锁检测"
+    echo "• 其他主流流媒体平台检测"
+    echo ""
+    echo -e "${GREEN}[*] 支持平台:${NC}"
+    echo "• 带有 bash 环境的任意 Unix 或类 Unix 操作系统"
+    echo "• Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux"
+    echo "• Alpine Linux, FreeBSD, MacOS 10.13+"
+    echo "• Android (Termux), iOS (iSH), Windows (MinGW/Cygwin)"
+    echo "• OpenWRT 23+ 等等"
+    echo ""
+    echo -e "${GREEN}[*] 测试特点:${NC}"
+    echo "• 纯 bash shell 实现，免 ROOT 执行"
+    echo "• 支持 IPv4 和 IPv6 双栈检测"
+    echo "• 可指定网卡和区域测试"
+    echo "• 支持多语言（中文/英文）"
+    echo "• 批量测试多个地区"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• Netflix CDN 分流测试依赖 DNS 解析"
+    echo "• VPN 代理可能影响 CDN 分流信息准确性"
+    echo "• 测试过程需要访问多个流媒体网站"
+    echo "• 建议在网络状况良好时进行测试"
+    echo ""
+    
+    echo -e "${GREEN}[*] 测试选项:${NC}"
+    echo "1. 完整测试（推荐）"
+    echo "2. 仅IPv4测试"
+    echo "3. 仅IPv6测试"
+    echo "4. 英文界面测试"
+    echo "5. 指定区域测试"
+    echo ""
+    
+    read -p "请选择测试类型 [1-5，默认1]: " test_choice
+    
+    # 处理空输入，默认选择第一个选项
+    if [[ -z "$test_choice" ]]; then
+        test_choice="1"
+        echo -e "${BLUE}[INFO]${NC} 默认选择: $test_choice"
+    fi
+    
+    case "$test_choice" in
+        "1")
+            echo ""
+            read -p "是否继续执行完整流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行完整流媒体解锁测试..."
+                echo -e "${YELLOW}正在进行流媒体解锁检测，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media)
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "完整流媒体解锁测试完成！"
+            else
+                log_info "已取消流媒体解锁测试"
+            fi
+            ;;
+        "2")
+            echo ""
+            read -p "是否继续执行IPv4流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行IPv4流媒体解锁测试..."
+                echo -e "${YELLOW}正在进行IPv4流媒体解锁检测，请耐心等待...${NC}"
+                echo ""
+                
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行IPv4流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media) -M 4
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "IPv4流媒体解锁测试完成！"
+            else
+                log_info "已取消IPv4流媒体解锁测试"
+            fi
+            ;;
+        "3")
+            echo ""
+            read -p "是否继续执行IPv6流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行IPv6流媒体解锁测试..."
+                echo -e "${YELLOW}正在进行IPv6流媒体解锁检测，请耐心等待...${NC}"
+                echo ""
+                
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行IPv6流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media) -M 6
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "IPv6流媒体解锁测试完成！"
+            else
+                log_info "已取消IPv6流媒体解锁测试"
+            fi
+            ;;
+        "4")
+            echo ""
+            read -p "是否继续执行英文界面流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行英文界面流媒体解锁测试..."
+                echo -e "${YELLOW}正在进行英文界面流媒体解锁检测，请耐心等待...${NC}"
+                echo ""
+                
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行英文界面流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media) -E en
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "英文界面流媒体解锁测试完成！"
+            else
+                log_info "已取消英文界面流媒体解锁测试"
+            fi
+            ;;
+        "5")
+            echo ""
+            echo -e "${GREEN}[*] 区域选择说明:${NC}"
+            echo "如果不指定区域编号或区域编号为空，脚本会显示区域选择菜单"
+            echo "您可以在脚本运行时选择要测试的具体区域"
+            echo ""
+            read -p "是否继续执行指定区域流媒体解锁测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行指定区域流媒体解锁测试..."
+                echo -e "${YELLOW}正在启动流媒体解锁检测，请在菜单中选择区域...${NC}"
+                echo ""
+                
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行指定区域流媒体测试脚本..."
+                    bash <(curl -L -s check.unlock.media) -R 0
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "指定区域流媒体解锁测试完成！"
+            else
+                log_info "已取消指定区域流媒体解锁测试"
+            fi
+            ;;
+        *)
+            log_warning "无效选择，已取消测试"
+            ;;
+    esac
+    
+    echo ""
+    echo -e "${GREEN}[*] 测试说明:${NC}"
+    echo "• 测试结果显示了各个流媒体平台的解锁状况"
+    echo "• 'Yes' 表示可以正常访问该平台"
+    echo "• 'No' 表示受到地区限制无法访问"
+    echo "• 'Failed' 表示测试过程中出现错误"
+    echo "• 建议保存测试结果以备后续参考"
+    echo ""
+    echo -e "${GREEN}[*] Docker 替代方案:${NC}"
+    echo "如果脚本执行有问题，也可以使用 Docker 版本："
+    echo "docker run --rm -ti --net=host lmc999/regioncheck"
+    echo ""
 } 
