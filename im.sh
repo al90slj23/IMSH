@@ -6,6 +6,61 @@
 # 网站: https://im.sh.cn
 # GitHub: https://github.com/al90slj23/IMSH
 
+# 🎯 智能执行检测
+# 如果用户直接curl下载脚本，显示使用提示
+if [ "${BASH_SOURCE[0]}" = "${0}" ] && [ -t 1 ]; then
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "🎉 IM.SH VPS小助手脚本下载成功！"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "📋 您有以下选择："
+    echo ""
+    echo "1️⃣  立即运行交互式菜单"
+    echo "2️⃣  查看使用说明"
+    echo "3️⃣  退出"
+    echo ""
+    
+    while true; do
+        read -p "请选择 [1-3]: " choice
+        case $choice in
+            1)
+                echo ""
+                echo "🚀 正在启动 IM.SH VPS小助手..."
+                sleep 1
+                break
+                ;;
+            2)
+                echo ""
+                echo "📖 使用说明："
+                echo ""
+                echo "🎯 推荐用法："
+                echo "curl im.sh.cn | bash                    # 一键运行"
+                echo ""
+                echo "🔧 直接跳转："
+                echo "curl im.sh.cn | bash -s -- 111         # 测速脚本"
+                echo "curl im.sh.cn | bash -s -- 121         # Docker安装"
+                echo "curl im.sh.cn | bash -s -- 131         # 系统清理"
+                echo ""
+                echo "📥 下载后运行："
+                echo "curl im.sh.cn > im.sh && chmod +x im.sh && ./im.sh"
+                echo ""
+                read -p "按回车键返回菜单..."
+                echo ""
+                continue
+                ;;
+            3)
+                echo ""
+                echo "👋 感谢使用 IM.SH！"
+                echo "💡 下次可以直接使用: curl im.sh.cn | bash"
+                exit 0
+                ;;
+            *)
+                echo "❌ 无效选择，请输入 1、2 或 3"
+                ;;
+        esac
+    done
+fi
+
 set -e  # 遇到错误立即退出
 
 # 颜色定义
