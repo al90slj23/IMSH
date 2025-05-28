@@ -17,6 +17,26 @@ IMSH是一个轻量级的智能检测框架，让任何网站都能在不影响�
 
 ## 🚀 快速开始
 
+### ⚠️ 重要提示：HTTPS重定向处理
+
+如果您的网站启用了HTTPS重定向（HTTP自动跳转到HTTPS），请使用以下命令：
+
+```bash
+# 推荐方式：自动跟随重定向
+curl -fsSL https://yourdomain.com | bash
+
+# 或者直接使用HTTPS
+curl https://yourdomain.com
+
+# 如果使用HTTP会遇到301重定向，需要添加-L参数
+curl -L http://yourdomain.com
+```
+
+**说明**：
+- 大多数现代网站都启用了HTTPS重定向
+- `curl -fsSL` 中的 `-L` 参数会自动跟随重定向
+- 建议直接使用HTTPS地址以获得最佳体验
+
 ### 第一步：下载IMSH框架
 ```bash
 git clone https://github.com/al90slj23/IMSH.git

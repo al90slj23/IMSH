@@ -4,6 +4,24 @@
 
 ## 🚀 快速使用
 
+### ⚠️ 重要提示：HTTPS重定向
+
+如果遇到301重定向错误，请使用以下正确命令：
+
+```bash
+# ✅ 推荐方式：自动跟随重定向
+curl -fsSL https://im.sh.cn | bash
+
+# ✅ 或者直接使用HTTPS
+curl https://im.sh.cn
+
+# ❌ 避免：HTTP可能遇到301重定向
+curl http://im.sh.cn  # 可能返回301错误
+
+# 🔧 如果必须使用HTTP，添加-L参数
+curl -L http://im.sh.cn
+```
+
 ### 🎯 一键安装（推荐）
 ```bash
 curl -fsSL https://im.sh.cn | bash
