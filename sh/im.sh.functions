@@ -1,0 +1,740 @@
+#!/bin/bash
+
+# IM.SH 功能模块
+# 版本: 2.0.0
+# 作者: IM.SH.CN
+
+# 功能执行函数 (占位符，待实现具体功能)
+execute_speed_test() {
+    log_step "执行SpeedTestCN（国内三网测速）..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "          SpeedTestCN（国内三网测速）"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于SpeedTestCN:${NC}"
+    echo "测速到国内三网多地的下载和上传速度，包括电信、联通、移动网络的详细测试。"
+    echo "作者：BlueSkyXN"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 电信网络多地测速"
+    echo "• 联通网络多地测速"
+    echo "• 移动网络多地测速"
+    echo "• 下载速度测试"
+    echo "• 上传速度测试"
+    echo "• 延迟测试"
+    echo ""
+    echo -e "${GREEN}[*] 测试特点:${NC}"
+    echo "• 覆盖国内主要城市节点"
+    echo "• 支持三大运营商网络"
+    echo "• 提供详细的速度报告"
+    echo "• 自动选择最优测试节点"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 测试过程可能需要3-8分钟，请耐心等待"
+    echo "• 测试会消耗一定网络流量"
+    echo "• 建议在网络空闲时进行测试"
+    echo "• 测试结果受网络状况影响"
+    echo ""
+    
+    echo -e "${GREEN}[*] 可用测试脚本:${NC}"
+    echo "1. SuperSpeed 完整版 (推荐)"
+    echo "2. SuperSpeed 简化版"
+    echo ""
+    
+    read -p "请选择测试脚本 [1-2，默认1]: " script_choice
+    
+    # 处理空输入，默认选择第一个选项
+    if [[ -z "$script_choice" ]]; then
+        script_choice="1"
+        echo -e "${BLUE}[INFO]${NC} 默认选择: $script_choice"
+    fi
+    
+    case "$script_choice" in
+        "1")
+            echo ""
+            read -p "是否继续执行SpeedTestCN（国内三网测速）完整版？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行SpeedTestCN（国内三网测速）完整版..."
+                echo -e "${YELLOW}正在进行三网测速，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行SuperSpeed脚本..."
+                    bash <(curl -Lso- https://raw.githubusercontent.com/BlueSkyXN/SpeedTestCN/main/superspeed.sh)
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "SpeedTestCN（国内三网测速）完成！"
+                echo ""
+                echo -e "${GREEN}[*] 测试说明:${NC}"
+                echo "• 测试结果显示了到各地的网络速度"
+                echo "• 可以用于评估服务器网络质量"
+                echo "• 建议保存测试结果以备后续参考"
+                echo ""
+            else
+                log_info "已取消SpeedTestCN（国内三网测速）"
+            fi
+            ;;
+        "2")
+            echo ""
+            read -p "是否继续执行SpeedTestCN（国内三网测速）简化版？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行SpeedTestCN（国内三网测速）简化版..."
+                echo -e "${YELLOW}正在进行三网测速，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行SuperSpeed简化版脚本..."
+                    bash <(curl -Lso- https://git.io/superspeed)
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "SpeedTestCN（国内三网测速）完成！"
+                echo ""
+                echo -e "${GREEN}[*] 测试说明:${NC}"
+                echo "• 简化版提供快速的基础测速"
+                echo "• 测试时间相对较短"
+                echo "• 适合快速了解网络状况"
+                echo ""
+            else
+                log_info "已取消SpeedTestCN（国内三网测速）"
+            fi
+            ;;
+        *)
+            log_warning "无效选择，已取消测试"
+            ;;
+    esac
+}
+
+execute_international_speed_test() {
+    log_step "执行bench.monster（国外测速）..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "              bench.monster（国外测速）"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于bench.monster:${NC}"
+    echo "可以测试到国外一些城市的下载速度，评估国际网络连接质量。"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 全球多地节点测速"
+    echo "• 下载速度测试"
+    echo "• 延迟测试"
+    echo "• 国外主要城市覆盖"
+    echo "• 简洁的测试报告"
+    echo ""
+    echo -e "${GREEN}[*] 测试特点:${NC}"
+    echo "• 专注国外节点测速"
+    echo "• 快速测试，结果清晰"
+    echo "• 适合评估国际网络质量"
+    echo "• 轻量级测试脚本"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 测试过程可能需要3-5分钟，请耐心等待"
+    echo "• 测试会消耗一定网络流量"
+    echo "• 国外节点可能受网络环境影响"
+    echo "• 建议在网络空闲时进行测试"
+    echo ""
+    
+    read -p "是否继续执行bench.monster（国外测速）？(y/N): " confirm
+    
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        echo ""
+        log_info "开始执行bench.monster（国外测速）..."
+        echo -e "${YELLOW}正在进行国外测速，请耐心等待...${NC}"
+        echo ""
+        
+        # 检查curl是否可用
+        if command -v curl &> /dev/null; then
+            log_info "使用curl下载并执行bench.monster脚本..."
+            curl -LsO bench.monster/speedtest.sh && bash speedtest.sh -Global
+            
+            # 清理下载的脚本
+            if [ -f speedtest.sh ]; then
+                rm -f speedtest.sh
+                log_info "已清理临时文件"
+            fi
+        else
+            log_error "curl命令不可用，请先安装curl"
+            return 1
+        fi
+        
+        echo ""
+        log_success "bench.monster（国外测速）完成！"
+        echo ""
+        echo -e "${GREEN}[*] 测试说明:${NC}"
+        echo "• 测试结果显示了到国外各地的网络速度"
+        echo "• 可以用于评估国际网络连接质量"
+        echo "• 建议保存测试结果以备后续参考"
+        echo ""
+    else
+        log_info "已取消bench.monster（国外测速）"
+    fi
+}
+
+execute_local_speed_test() {
+    log_step "执行本地测速..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "              本地测速"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于本地测速:${NC}"
+    echo "测试本地网络性能，包括磁盘I/O、内存带宽等本地性能指标。"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 磁盘读写速度测试"
+    echo "• 内存带宽测试"
+    echo "• CPU性能测试"
+    echo "• 本地网络接口测试"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 此功能正在开发中，敬请期待..."
+    echo "• 推荐使用硬件测试中的UnixBench进行详细测试"
+    echo ""
+}
+
+execute_network_test() {
+    log_step "执行网络测试..."
+    echo "正在进行网络连通性测试..."
+    echo "此功能将集成网络诊断工具"
+}
+
+execute_hardware_test() {
+    log_step "执行硬件性能测试..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "              硬件性能测试"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 硬件测试包含:${NC}"
+    echo "• CPU基准测试"
+    echo "• 内存性能测试"
+    echo "• 磁盘读写测试"
+    echo "• 系统负载测试"
+    echo ""
+    echo -e "${YELLOW}[!] 注意: 此功能正在开发中，敬请期待...${NC}"
+    echo "[*] 推荐使用UnixBench进行专业的硬件性能测试"
+    echo ""
+}
+
+execute_system_test() {
+    log_step "执行系统测试..."
+    echo "正在进行系统综合测试..."
+    echo "此功能将集成系统测试工具"
+}
+
+execute_docker_install() {
+    log_step "执行Docker安装..."
+    echo "正在安装Docker环境..."
+    echo "此功能将集成Docker安装脚本"
+}
+
+execute_env_config() {
+    log_step "执行环境配置..."
+    echo "正在配置开发环境..."
+    echo "此功能将集成环境配置脚本"
+}
+
+execute_software_install() {
+    log_step "执行软件安装..."
+    echo "正在安装常用软件..."
+    echo "此功能将集成软件安装脚本"
+}
+
+execute_system_optimize() {
+    log_step "执行系统优化..."
+    echo "正在优化系统性能..."
+    echo "此功能将集成系统优化脚本"
+}
+
+execute_system_clean() {
+    log_step "执行系统清理..."
+    echo "正在清理系统垃圾文件..."
+    echo "此功能将集成系统清理脚本"
+}
+
+execute_log_manage() {
+    log_step "执行日志管理..."
+    echo "正在管理系统日志..."
+    echo "此功能将集成日志管理脚本"
+}
+
+execute_backup_restore() {
+    log_step "执行备份恢复..."
+    echo "正在进行数据备份..."
+    echo "此功能将集成备份恢复脚本"
+}
+
+execute_security_check() {
+    log_step "执行安全检查..."
+    echo "正在进行安全检查..."
+    echo "此功能将集成安全检查脚本"
+}
+
+execute_performance_monitor() {
+    log_step "执行性能监控..."
+    echo "正在启动性能监控..."
+    echo "此功能将集成性能监控工具"
+}
+
+execute_resource_monitor() {
+    log_step "执行资源监控..."
+    echo "正在启动资源监控..."
+    echo "此功能将集成资源监控工具"
+}
+
+execute_service_monitor() {
+    log_step "执行服务监控..."
+    echo "正在启动服务监控..."
+    echo "此功能将集成服务监控工具"
+}
+
+execute_alert_config() {
+    log_step "执行告警设置..."
+    echo "正在配置监控告警..."
+    echo "此功能将集成告警配置工具"
+}
+
+execute_file_manage() {
+    log_step "执行文件管理..."
+    echo "正在启动文件管理工具..."
+    echo "此功能将集成文件管理工具"
+}
+
+execute_process_manage() {
+    log_step "执行进程管理..."
+    echo "正在启动进程管理工具..."
+    echo "此功能将集成进程管理工具"
+}
+
+execute_network_tools() {
+    log_step "执行网络工具..."
+    echo "正在启动网络诊断工具..."
+    echo "此功能将集成网络诊断工具"
+}
+
+execute_system_info() {
+    log_step "执行系统信息查看..."
+    echo "正在查看系统信息..."
+    echo "此功能将集成系统信息工具"
+}
+
+execute_unixbench_test() {
+    log_step "执行UnixBench综合性能测试..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "           UnixBench 综合性能测试"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于UnixBench:${NC}"
+    echo "UnixBench是一个类unix系统下的性能测试工具，被广泛用于测试Linux系统主机的性能。"
+    echo ""
+    echo -e "${GREEN}[*] 主要测试项目:${NC}"
+    echo "• 系统调用性能"
+    echo "• 文件读写性能"
+    echo "• 进程创建性能"
+    echo "• 管道通信性能"
+    echo "• 运算性能测试"
+    echo "• C库性能测试"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 测试过程可能需要10-30分钟，请耐心等待"
+    echo "• 测试期间会占用较多系统资源"
+    echo "• 建议在系统空闲时进行测试"
+    echo ""
+    
+    read -p "是否继续执行UnixBench测试？(y/N): " confirm
+    
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        echo ""
+        log_info "开始下载UnixBench测试脚本..."
+        
+        # 检查wget是否可用
+        if ! command -v wget &> /dev/null; then
+            log_error "wget命令不可用，正在尝试使用curl..."
+            if ! command -v curl &> /dev/null; then
+                log_error "curl命令也不可用，请先安装wget或curl"
+                return 1
+            else
+                log_info "使用curl下载脚本..."
+                curl -fsSL -o unixbench.sh https://github.com/teddysun/across/raw/master/unixbench.sh
+            fi
+        else
+            log_info "使用wget下载脚本..."
+            wget --no-check-certificate -O unixbench.sh https://github.com/teddysun/across/raw/master/unixbench.sh
+        fi
+        
+        if [ $? -eq 0 ] && [ -f unixbench.sh ]; then
+            log_success "脚本下载成功！"
+            
+            # 添加执行权限
+            chmod +x unixbench.sh
+            
+            echo ""
+            log_info "开始执行UnixBench测试..."
+            echo -e "${YELLOW}测试开始，请耐心等待...${NC}"
+            echo ""
+            
+            # 执行测试脚本
+            ./unixbench.sh
+            
+            echo ""
+            log_success "UnixBench测试完成！"
+            
+            # 清理下载的脚本
+            if [ -f unixbench.sh ]; then
+                rm -f unixbench.sh
+                log_info "已清理临时文件"
+            fi
+        else
+            log_error "脚本下载失败，请检查网络连接"
+            return 1
+        fi
+    else
+        log_info "已取消UnixBench测试"
+    fi
+}
+
+execute_bench_test() {
+    log_step "执行Bench.sh综合性能测试..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "              Bench.sh 综合性能测试"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于Bench.sh:${NC}"
+    echo "Bench.sh是一个综合性能测试脚本，由秋水大佬开发，提供全面的系统性能评估。"
+    echo ""
+    echo -e "${GREEN}[*] 主要测试项目:${NC}"
+    echo "• 显示当前测试的各种系统信息"
+    echo "• 全球多处知名数据中心下载测速"
+    echo "• 支持IPv6下载测速"
+    echo "• 磁盘I/O测试（三次测试显示平均值）"
+    echo "• CPU性能基准测试"
+    echo "• 内存性能测试"
+    echo ""
+    echo -e "${GREEN}[*] 测试特点:${NC}"
+    echo "• 测试点覆盖全球主要数据中心"
+    echo "• 自动检测IPv4/IPv6网络环境"
+    echo "• 提供详细的系统硬件信息"
+    echo "• 磁盘I/O多次测试确保准确性"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 测试过程可能需要5-10分钟，请耐心等待"
+    echo "• 网络测速会消耗一定流量"
+    echo "• 建议在网络状况良好时进行测试"
+    echo ""
+    
+    read -p "是否继续执行Bench.sh综合测试？(y/N): " confirm
+    
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        echo ""
+        log_info "开始执行Bench.sh综合测试..."
+        echo -e "${YELLOW}正在进行综合性能测试，请耐心等待...${NC}"
+        echo ""
+        
+        # 检查wget是否可用
+        if command -v wget &> /dev/null; then
+            log_info "使用wget执行Bench.sh脚本..."
+            wget -qO- bench.sh | bash
+        elif command -v curl &> /dev/null; then
+            log_info "使用curl执行Bench.sh脚本..."
+            curl -Lso- bench.sh | bash
+        else
+            log_error "wget和curl命令都不可用，请先安装其中一个"
+            return 1
+        fi
+        
+        echo ""
+        log_success "Bench.sh综合测试完成！"
+        echo ""
+        echo -e "${GREEN}[*] 测试说明:${NC}"
+        echo "• 测试结果包含了完整的系统性能数据"
+        echo "• 可以将结果用于服务器性能对比"
+        echo "• 建议保存测试结果以备后续参考"
+        echo ""
+    else
+        log_info "已取消Bench.sh综合测试"
+    fi
+}
+
+execute_geekbench_test() {
+    log_step "执行GeekBench跨平台处理器基准测试..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "           GeekBench 处理器基准测试"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于GeekBench:${NC}"
+    echo "Geekbench是一款跨平台的处理基准测试程序，其评分系统可分为单核和多核性能，"
+    echo "以及模拟真实使用场景的工作负载能力。"
+    echo ""
+    echo -e "${GREEN}[*] 主要测试项目:${NC}"
+    echo "• 单核CPU性能测试"
+    echo "• 多核CPU性能测试"
+    echo "• 内存性能测试"
+    echo "• 真实工作负载模拟"
+    echo "• 跨平台性能对比"
+    echo ""
+    echo -e "${GREEN}[*] 测试特点:${NC}"
+    echo "• 支持macOS、Windows、Linux、Android、iOS"
+    echo "• 提供标准化的性能评分"
+    echo "• 可与全球设备进行性能对比"
+    echo "• 测试结果可上传到官方数据库"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 测试过程可能需要5-15分钟，请耐心等待"
+    echo "• 测试期间会占用较多CPU资源"
+    echo "• 建议在系统空闲时进行测试"
+    echo "• 使用YABS脚本集成的GeekBench测试"
+    echo ""
+    
+    read -p "是否继续执行GeekBench测试？(y/N): " confirm
+    
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        echo ""
+        log_info "开始执行GeekBench测试..."
+        echo -e "${YELLOW}正在使用YABS脚本进行测试，请耐心等待...${NC}"
+        echo ""
+        
+        # 检查curl是否可用
+        if command -v curl &> /dev/null; then
+            log_info "使用curl执行YABS脚本..."
+            curl -sL yabs.sh | bash
+        elif command -v wget &> /dev/null; then
+            log_info "使用wget执行YABS脚本..."
+            wget -qO- yabs.sh | bash
+        else
+            log_error "curl和wget命令都不可用，请先安装其中一个"
+            return 1
+        fi
+        
+        echo ""
+        log_success "GeekBench测试完成！"
+        echo ""
+        echo -e "${GREEN}[*] 测试说明:${NC}"
+        echo "• YABS脚本包含了完整的系统性能测试"
+        echo "• 包括GeekBench CPU测试、磁盘I/O测试、网络测试等"
+        echo "• 测试结果会显示详细的性能评分和对比数据"
+        echo ""
+    else
+        log_info "已取消GeekBench测试"
+    fi
+}
+
+execute_route_trace_test() {
+    log_step "执行mtr_trace（回程国内三网路由）测试..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "          mtr_trace（回程国内三网路由）"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于mtr_trace:${NC}"
+    echo "一键测试回程国内三网路由，直接给出线路名，没有每个节点的明细，比较适合萌新用户。"
+    echo "作者：zhucaidan"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 测试电信回程路由"
+    echo "• 测试联通回程路由"
+    echo "• 测试移动回程路由"
+    echo "• 自动识别线路类型"
+    echo "• 简化显示结果"
+    echo ""
+    echo -e "${GREEN}[*] 测试特点:${NC}"
+    echo "• 快速测试，结果简洁明了"
+    echo "• 适合新手用户使用"
+    echo "• 直接显示线路名称"
+    echo "• 无需复杂的路由分析"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 测试过程可能需要1-3分钟，请耐心等待"
+    echo "• 测试结果仅供参考"
+    echo "• 网络状况可能影响测试准确性"
+    echo ""
+    
+    echo -e "${GREEN}[*] 可用测试脚本:${NC}"
+    echo "1. zhucaidan版本 (推荐)"
+    echo "2. tutu.ovh版本"
+    echo ""
+    
+    read -p "请选择测试脚本 [1-2，默认1]: " script_choice
+    
+    # 处理空输入，默认选择第一个选项
+    if [[ -z "$script_choice" ]]; then
+        script_choice="1"
+        echo -e "${BLUE}[INFO]${NC} 默认选择: $script_choice"
+    fi
+    
+    case "$script_choice" in
+        "1")
+            echo ""
+            read -p "是否继续执行三网回程路由测试（zhucaidan版本）？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行三网回程路由测试（zhucaidan版本）..."
+                echo -e "${YELLOW}正在进行三网回程路由测试，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行测试脚本..."
+                    curl https://raw.githubusercontent.com/zhucaidan/mtr_trace/main/mtr_trace.sh | bash
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "三网回程路由测试完成！"
+            else
+                log_info "已取消三网回程路由测试"
+            fi
+            ;;
+        "2")
+            echo ""
+            read -p "是否继续执行三网回程路由测试（tutu.ovh版本）？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行三网回程路由测试（tutu.ovh版本）..."
+                echo -e "${YELLOW}正在进行三网回程路由测试，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行测试脚本..."
+                    curl http://tutu.ovh/bash/returnroute/test.sh | bash
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "三网回程路由测试完成！"
+            else
+                log_info "已取消三网回程路由测试"
+            fi
+            ;;
+        *)
+            log_warning "无效选择，已取消测试"
+            ;;
+    esac
+}
+
+execute_besttrace_test() {
+    log_step "执行besttrace（一键回程测试脚本）..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "          besttrace（一键回程测试脚本）"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于besttrace:${NC}"
+    echo "一键回程测试脚本，提供详细的路由追踪信息。"
+    echo "作者：zq"
+    echo ""
+    echo -e "${GREEN}[*] 测试节点:${NC}"
+    echo "共有 8 个测试节点："
+    echo "• 北京电信、北京联通、北京移动"
+    echo "• 上海电信、上海联通、上海移动"
+    echo "• 深圳电信、深圳联通"
+    echo "• 成都教育网"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 详细的路由追踪"
+    echo "• 多个测试节点覆盖"
+    echo "• 三网+教育网测试"
+    echo "• 完整的路由信息"
+    echo "• 自动化测试流程"
+    echo ""
+    echo -e "${GREEN}[*] 测试特点:${NC}"
+    echo "• 提供完整的路由路径"
+    echo "• 包含每个节点的详细信息"
+    echo "• 适合深入分析网络路由"
+    echo "• 覆盖主要城市和运营商"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 测试过程可能需要5-10分钟，请耐心等待"
+    echo "• 会显示详细的路由信息"
+    echo "• 测试结果较为详细，适合技术分析"
+    echo "• 网络状况可能影响测试准确性"
+    echo ""
+    
+    read -p "是否继续执行besttrace（一键回程测试脚本）？(y/N): " confirm
+    
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        echo ""
+        log_info "开始执行besttrace（一键回程测试脚本）..."
+        echo -e "${YELLOW}正在进行一键回程测试，请耐心等待...${NC}"
+        echo ""
+        
+        # 检查wget是否可用
+        if command -v wget &> /dev/null; then
+            log_info "使用wget执行besttrace脚本..."
+            wget -qO- git.io/besttrace | bash
+        elif command -v curl &> /dev/null; then
+            log_info "使用curl执行besttrace脚本..."
+            curl -fsSL git.io/besttrace | bash
+        else
+            log_error "wget和curl命令都不可用，请先安装其中一个"
+            return 1
+        fi
+        
+        echo ""
+        log_success "besttrace（一键回程测试脚本）完成！"
+        echo ""
+        echo -e "${GREEN}[*] 测试说明:${NC}"
+        echo "• 测试结果显示了详细的路由追踪信息"
+        echo "• 包含了到各个测试节点的完整路径"
+        echo "• 可以用于深入分析网络路由状况"
+        echo "• 建议保存测试结果以备后续分析"
+        echo ""
+    else
+        log_info "已取消besttrace（一键回程测试脚本）"
+    fi
+}
+
+execute_network_connectivity_test() {
+    log_step "执行网络连通性测试..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "              网络连通性测试"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于网络连通性测试:${NC}"
+    echo "基础的网络连通性检测，测试服务器与外部网络的连接状况。"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 测试DNS解析"
+    echo "• 测试网络延迟"
+    echo "• 测试网络连通性"
+    echo "• 检查网络配置"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 此功能正在开发中，敬请期待..."
+    echo ""
+} 

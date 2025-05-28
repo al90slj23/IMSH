@@ -170,7 +170,7 @@ show_test_scripts_menu() {
                         show_hardware_test_menu
                         ;;
                     "3")
-                        execute_speed_test
+                        show_speed_test_menu
                         ;;
                     "4")
                         show_network_test_menu
@@ -293,6 +293,64 @@ show_hardware_test_menu() {
     done
 }
 
+# 测速脚本菜单
+show_speed_test_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 测试脚本 > 测速脚本"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 测速脚本 ===${NC}"
+        echo ""
+        echo "1. SpeedTestCN（国内三网测速） by BlueSkyXN"
+        echo "2. bench.monster（国外测速）"
+        echo "3. 本地测速 - 本地网络性能测试"
+        echo ""
+        
+        read -p "请选择功能 [1-3]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "speed"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_speed_test
+                        ;;
+                    "2")
+                        execute_international_speed_test
+                        ;;
+                    "3")
+                        execute_local_speed_test
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
 # 网络测试菜单
 show_network_test_menu() {
     CURRENT_PATH="主菜单 > 前辈脚本 > 测试脚本 > 网络测试"
@@ -303,11 +361,12 @@ show_network_test_menu() {
         
         echo -e "${GREEN}=== 网络测试 ===${NC}"
         echo ""
-        echo "1. 三网回程路由 - 一键测试三网回程路由"
-        echo "2. 网络连通性测试 - 基础网络连通性检测"
+        echo "1. mtr_trace（回程国内三网路由） by zhucaidan"
+        echo "2. besttrace（一键回程测试脚本） by zq"
+        echo "3. 网络连通性测试 - 基础网络连通性检测"
         echo ""
         
-        read -p "请选择功能 [1-2]: " choice
+        read -p "请选择功能 [1-3]: " choice
         
         # 处理空输入，默认选择第一个选项
         if [[ -z "$choice" ]]; then
@@ -331,6 +390,9 @@ show_network_test_menu() {
                         execute_route_trace_test
                         ;;
                     "2")
+                        execute_besttrace_test
+                        ;;
+                    "3")
                         execute_network_connectivity_test
                         ;;
                     *)

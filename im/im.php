@@ -15,22 +15,26 @@ if ($isCurl) {
     $mainScript = $scriptDir . '/im.sh';
     $navModule = $scriptDir . '/sh/im.sh.nav';
     $menuModule = $scriptDir . '/sh/im.sh.menu';
+    $functionsModule = $scriptDir . '/sh/im.sh.functions';
     
-    if (file_exists($mainScript) && file_exists($navModule) && file_exists($menuModule)) {
+    if (file_exists($mainScript) && file_exists($navModule) && file_exists($menuModule) && file_exists($functionsModule)) {
         // 读取主脚本
         $script = file_get_contents($mainScript);
         
         // 读取模块文件
         $navContent = file_get_contents($navModule);
         $menuContent = file_get_contents($menuModule);
+        $functionsContent = file_get_contents($functionsModule);
         
         // 移除模块文件的shebang行
         $navContent = preg_replace('/^#!/', '# ', $navContent);
         $menuContent = preg_replace('/^#!/', '# ', $menuContent);
+        $functionsContent = preg_replace('/^#!/', '# ', $functionsContent);
         
         // 移除主脚本中的模块加载部分
         $script = preg_replace('/# 加载导航模块.*?fi\n/s', '', $script);
         $script = preg_replace('/# 加载菜单模块.*?fi\n/s', '', $script);
+        $script = preg_replace('/# 加载功能模块.*?fi\n/s', '', $script);
         
         // 在主脚本的适当位置插入模块内容
         $insertPoint = strpos($script, '# 🎯 智能执行检测');
@@ -41,6 +45,7 @@ if ($isCurl) {
             $script = $beforeInsert . 
                      "# ===== 导航模块 =====\n" . $navContent . "\n\n" .
                      "# ===== 菜单模块 =====\n" . $menuContent . "\n\n" .
+                     "# ===== 功能模块 =====\n" . $functionsContent . "\n\n" .
                      $afterInsert;
         }
     } else {

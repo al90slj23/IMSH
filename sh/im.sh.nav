@@ -94,9 +94,13 @@ show_help() {
     echo "  111        - 直接跳转到Bench.sh综合测试"
     echo "  112        - 直接跳转到UnixBench性能测试"
     echo "  1121       - 直接跳转到GeekBench处理器测试"
-    echo "  113        - 直接跳转到测速脚本"
+    echo "  113        - 直接跳转到测速脚本菜单"
+    echo "  1131       - 直接跳转到SpeedTestCN（国内三网测速）"
+    echo "  1132       - 直接跳转到bench.monster（国外测速）"
+    echo "  1133       - 直接跳转到本地测速"
     echo "  114        - 直接跳转到网络测试"
-    echo "  1141       - 直接跳转到三网回程路由测试"
+    echo "  1141       - 直接跳转到mtr_trace（回程国内三网路由）"
+    echo "  1142       - 直接跳转到besttrace（一键回程测试脚本）"
     echo "  121        - 直接跳转到Docker安装"
     echo "  131        - 直接跳转到系统清理"
     echo "  数字串     - 直接跳转到对应功能"
@@ -135,13 +139,25 @@ execute_direct_command() {
             execute_geekbench_test
             ;;
         "113")
+            show_speed_test_menu
+            ;;
+        "1131")
             execute_speed_test
+            ;;
+        "1132")
+            execute_international_speed_test
+            ;;
+        "1133")
+            execute_local_speed_test
             ;;
         "114")
             show_network_test_menu
             ;;
         "1141")
             execute_route_trace_test
+            ;;
+        "1142")
+            execute_besttrace_test
             ;;
         "121")
             execute_docker_install

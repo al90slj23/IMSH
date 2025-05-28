@@ -1,6 +1,10 @@
-# IMSH - 智能检测框架
+# IMSH - 智能检测框架 v2.0.0
 
 > **SH就是这么简单！** 一行代码让你的网站实现智能检测：浏览器访问显示正常网站，curl访问下载自定义脚本。
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)](https://github.com/al90slj23/IMSH)
+[![Shell](https://img.shields.io/badge/shell-bash-orange.svg)](https://www.gnu.org/software/bash/)
 
 ## 🎯 核心理念
 
@@ -14,6 +18,7 @@ IMSH是一个轻量级的智能检测框架，让任何网站都能在不影响�
 - **🌐 框架通用**: 支持10+主流Web框架
 - **🛡️ SEO友好**: 搜索引擎正常索引，不影响SEO
 - **⚡ 高性能**: 毫秒级检测，无性能损耗
+- **🎮 模块化架构**: 主脚本+导航+菜单+功能模块
 
 ## 🚀 快速开始
 
@@ -40,23 +45,24 @@ chmod +x im.sh
 当您下载脚本后直接运行时，会看到：
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎉 IM.SH VPS小助手脚本下载成功！
+[*] IM.SH VPS小助手脚本下载成功！
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📋 您有以下选择：
+[*] 您有以下选择：
 
-1️⃣  立即运行交互式菜单
-2️⃣  查看使用说明  
-3️⃣  退出
+1. 立即运行交互式菜单
+2. 查看使用说明  
+3. 退出
 
 请选择 [1-3]:
 ```
 
 #### 方式三：直接跳转功能
 ```bash
-curl im.sh.cn | bash -s -- 111  # 测速脚本
-curl im.sh.cn | bash -s -- 121  # Docker安装
-curl im.sh.cn | bash -s -- 131  # 系统清理
+curl im.sh.cn | bash -s -- 111   # Bench.sh综合测试
+curl im.sh.cn | bash -s -- 1131  # SpeedTestCN国内三网测速
+curl im.sh.cn | bash -s -- 1141  # mtr_trace回程路由测试
+curl im.sh.cn | bash -s -- 1142  # besttrace一键回程测试
 ```
 
 ### ⚠️ HTTPS重定向处理
@@ -79,6 +85,30 @@ curl -L http://yourdomain.com
 - `curl -fsSL` 中的 `-L` 参数会自动跟随重定向
 - 建议直接使用HTTPS地址以获得最佳体验
 - **最佳方案**：关闭强制HTTPS重定向，使用最简单的 `curl domain.com | bash`
+
+## 🏗️ 架构设计
+
+### 模块化结构
+```
+imsh/
+├── im.sh                    # 主脚本 (300行)
+├── sh/                      # 模块目录
+│   ├── im.sh.nav           # 导航模块 (213行)
+│   ├── im.sh.menu          # 菜单模块 (672行)
+│   └── im.sh.functions     # 功能模块 (600+行)
+├── im/                      # 智能检测
+│   └── im.php              # PHP智能检测脚本
+├── install.sh              # 安装脚本
+├── README.md               # 框架集成说明（本文件）
+└── SCRIPT_README.md        # 脚本功能说明
+```
+
+### 智能检测机制
+- **浏览器访问**: 显示正常网站页面
+- **curl访问**: 自动合并所有模块，返回完整可执行脚本
+- **框架兼容**: 支持ThinkPHP、Laravel等主流PHP框架
+
+## 📦 集成部署
 
 ### 第一步：下载IMSH框架
 ```bash
@@ -104,13 +134,13 @@ cd your-project-directory
 #### ThinkPHP 6.x
 ```php
 // route/app.php
-Route::any("/", function() { require_once root_path() . 'IMSH/im/im.php'; });
+Route::any("/", function() { require_once root_path() . 'imsh/im/im.php'; });
 ```
 
 #### Laravel 8.x/9.x/10.x/11.x
 ```php
 // routes/web.php
-Route::any('/', function() { require_once base_path('IMSH/im/im.php'); });
+Route::any('/', function() { require_once base_path('imsh/im/im.php'); });
 ```
 
 #### Express.js (Node.js)
@@ -119,7 +149,7 @@ Route::any('/', function() { require_once base_path('IMSH/im/im.php'); });
 app.all('/', (req, res) => {
     const userAgent = req.get('User-Agent') || '';
     if (userAgent.toLowerCase().includes('curl')) {
-        res.sendFile(path.join(__dirname, 'IMSH/im.sh'));
+        res.sendFile(path.join(__dirname, 'imsh/im.sh'));
     } else {
         // 调用你的原有首页逻辑
         res.render('index');
@@ -133,7 +163,7 @@ app.all('/', (req, res) => {
 def index(request):
     user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
     if 'curl' in user_agent:
-        with open('IMSH/im.sh', 'r') as f:
+        with open('imsh/im.sh', 'r') as f:
             script = f.read()
         return HttpResponse(script, content_type='text/plain')
     else:
@@ -148,50 +178,10 @@ def index(request):
 def index():
     user_agent = request.headers.get('User-Agent', '').lower()
     if 'curl' in user_agent:
-        return send_file('IMSH/im.sh', mimetype='text/plain')
+        return send_file('imsh/im.sh', mimetype='text/plain')
     else:
         // 调用你的原有首页逻辑
         return render_template('index.html')
-```
-
-#### Spring Boot (Java)
-```java
-@Controller
-public class IndexController {
-    @RequestMapping("/")
-    public ResponseEntity<?> index(HttpServletRequest request) {
-        String userAgent = request.getHeader("User-Agent");
-        if (userAgent != null && userAgent.toLowerCase().contains("curl")) {
-            // 返回脚本文件
-            Resource resource = new ClassPathResource("IMSH/im.sh");
-            return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_PLAIN)
-                .body(resource);
-        } else {
-            // 调用你的原有首页逻辑
-            return ResponseEntity.ok("index");
-        }
-    }
-}
-```
-
-#### ASP.NET Core (C#)
-```csharp
-[Route("/")]
-public IActionResult Index()
-{
-    var userAgent = Request.Headers["User-Agent"].ToString().ToLower();
-    if (userAgent.Contains("curl"))
-    {
-        var scriptPath = Path.Combine(Directory.GetCurrentDirectory(), "IMSH", "im.sh");
-        return PhysicalFile(scriptPath, "text/plain");
-    }
-    else
-    {
-        // 调用你的原有首页逻辑
-        return View();
-    }
-}
 ```
 
 #### 原生PHP
@@ -200,8 +190,7 @@ public IActionResult Index()
 // index.php
 $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 if (stripos($userAgent, 'curl') !== false) {
-    header('Content-Type: text/plain');
-    readfile('IMSH/im.sh');
+    require_once 'imsh/im/im.php';
     exit;
 } else {
     // 你的原有首页逻辑
@@ -212,20 +201,15 @@ if (stripos($userAgent, 'curl') !== false) {
 
 ### 第四步：自定义你的脚本
 
-编辑 `IMSH/im.sh` 文件，添加你想要的安装逻辑：
+编辑 `imsh/sh/im.sh.functions` 文件，添加你想要的功能：
 
 ```bash
-#!/bin/bash
-echo "欢迎使用我的VPS配置脚本！"
-
-# 添加你的安装逻辑
-install_my_software() {
-    echo "安装我的软件..."
-    # 你的安装命令
+# 添加自定义功能
+execute_my_custom_function() {
+    log_step "执行我的自定义功能..."
+    echo "这里是我的自定义逻辑"
+    // 你的自定义命令
 }
-
-# 调用安装函数
-install_my_software
 ```
 
 ## 🎨 实际效果演示
@@ -260,36 +244,47 @@ curl -fsSL yourdomain.com | bash
 
 ## 📋 完整功能列表
 
+### 🧪 测试脚本
 ```bash
-# 测试脚本
-curl im.sh.cn | bash -s -- 111  # 测速脚本
-curl im.sh.cn | bash -s -- 112  # 网络测试
-curl im.sh.cn | bash -s -- 113  # 硬件测试
-curl im.sh.cn | bash -s -- 114  # 系统测试
+curl im.sh.cn | bash -s -- 111   # Bench.sh综合测试
+curl im.sh.cn | bash -s -- 112   # UnixBench性能测试
+curl im.sh.cn | bash -s -- 1121  # GeekBench处理器测试
+curl im.sh.cn | bash -s -- 1131  # SpeedTestCN国内三网测速
+curl im.sh.cn | bash -s -- 1132  # bench.monster国外测速
+curl im.sh.cn | bash -s -- 1141  # mtr_trace回程路由测试
+curl im.sh.cn | bash -s -- 1142  # besttrace一键回程测试
+```
 
-# 安装脚本
-curl im.sh.cn | bash -s -- 121  # Docker安装
-curl im.sh.cn | bash -s -- 122  # 环境配置
-curl im.sh.cn | bash -s -- 123  # 软件安装
-curl im.sh.cn | bash -s -- 124  # 系统优化
+### 🔧 安装脚本
+```bash
+curl im.sh.cn | bash -s -- 121   # Docker安装
+curl im.sh.cn | bash -s -- 122   # 环境配置
+curl im.sh.cn | bash -s -- 123   # 软件安装
+curl im.sh.cn | bash -s -- 124   # 系统优化
+```
 
-# 维护脚本
-curl im.sh.cn | bash -s -- 131  # 系统清理
-curl im.sh.cn | bash -s -- 132  # 日志管理
-curl im.sh.cn | bash -s -- 133  # 备份恢复
-curl im.sh.cn | bash -s -- 134  # 安全检查
+### 🧹 维护脚本
+```bash
+curl im.sh.cn | bash -s -- 131   # 系统清理
+curl im.sh.cn | bash -s -- 132   # 日志管理
+curl im.sh.cn | bash -s -- 133   # 备份恢复
+curl im.sh.cn | bash -s -- 134   # 安全检查
+```
 
-# 监控脚本
-curl im.sh.cn | bash -s -- 141  # 性能监控
-curl im.sh.cn | bash -s -- 142  # 资源监控
-curl im.sh.cn | bash -s -- 143  # 服务监控
-curl im.sh.cn | bash -s -- 144  # 告警设置
+### 📊 监控脚本
+```bash
+curl im.sh.cn | bash -s -- 141   # 性能监控
+curl im.sh.cn | bash -s -- 142   # 资源监控
+curl im.sh.cn | bash -s -- 143   # 服务监控
+curl im.sh.cn | bash -s -- 144   # 告警设置
+```
 
-# 工具脚本
-curl im.sh.cn | bash -s -- 151  # 文件管理
-curl im.sh.cn | bash -s -- 152  # 进程管理
-curl im.sh.cn | bash -s -- 153  # 网络工具
-curl im.sh.cn | bash -s -- 154  # 系统信息
+### 🛠️ 工具脚本
+```bash
+curl im.sh.cn | bash -s -- 151   # 文件管理
+curl im.sh.cn | bash -s -- 152   # 进程管理
+curl im.sh.cn | bash -s -- 153   # 网络工具
+curl im.sh.cn | bash -s -- 154   # 系统信息
 ```
 
 ## 🔧 工作原理
@@ -298,7 +293,7 @@ curl im.sh.cn | bash -s -- 154  # 系统信息
 ```
 1. 用户访问网站首页
 2. 检测 User-Agent 头部
-3. 如果包含 "curl" → 返回脚本文件
+3. 如果包含 "curl" → 返回合并后的完整脚本
 4. 如果是浏览器 → 调用原有首页逻辑
 ```
 
@@ -308,20 +303,7 @@ curl im.sh.cn | bash -s -- 154  # 系统信息
 - **完全透明**: 浏览器用户完全无感知
 - **SEO友好**: 搜索引擎爬虫正常访问
 - **缓存兼容**: 不影响CDN和缓存策略
-
-## 📁 目录结构
-
-```
-IMSH/
-├── README.md           # 框架集成说明（本文件）
-├── SCRIPT_README.md    # im.sh脚本功能说明
-├── install.sh          # 框架安装脚本
-├── im.sh               # 你的自定义脚本
-└── im/
-    ├── im.php          # PHP检测逻辑
-    ├── im.js           # Node.js检测逻辑
-    └── im.py           # Python检测逻辑
-```
+- **模块化**: 自动合并所有模块文件
 
 ## 🛠️ 高级配置
 
@@ -330,7 +312,7 @@ IMSH/
 使用 `install.sh` 可以快速配置您的专属智能检测脚本：
 
 ```bash
-./IMSH/install.sh
+./imsh/install.sh
 ```
 
 **配置选项：**
@@ -338,32 +320,6 @@ IMSH/
 - **脚本名称**：自定义脚本文件名（如：myvps.sh、deploy.sh）
 - **域名设置**：自动替换脚本中的域名信息
 - **框架检测**：自动识别并生成对应的集成代码
-
-**生成文件：**
-```
-IMSH/
-├── your-script.sh          # 您的自定义脚本
-├── im.sh                   # 原始脚本备份
-├── integration_guide.txt   # 专属集成指南
-└── im/
-    ├── im.php              # 自动更新脚本路径
-    ├── im.js               # 自动更新脚本路径
-    └── im.py               # 自动更新脚本路径
-```
-
-### 品牌化定制
-
-安装工具会自动替换脚本中的品牌信息：
-
-```bash
-# 原始脚本
-# IM.SH - 超强大VPS一键配置脚本
-# 网站: https://im.sh.cn
-
-# 自定义后
-# MyVPS - 超强大VPS一键配置脚本  
-# 网站: https://yourdomain.com
-```
 
 ### 自定义检测逻辑
 你可以修改 `im/im.php` 来自定义检测逻辑：
@@ -387,9 +343,8 @@ function isScriptRequest() {
 }
 
 if (isScriptRequest()) {
-    // 返回脚本
-    header('Content-Type: text/plain');
-    readfile(__DIR__ . '/../im.sh');
+    // 返回合并后的完整脚本
+    require_once __DIR__ . '/im.php';
     exit;
 } else {
     // 调用原有逻辑
@@ -413,18 +368,8 @@ switch ($script) {
         readfile(__DIR__ . '/../scripts/nodejs.sh');
         break;
     default:
-        readfile(__DIR__ . '/../im.sh');
+        require_once __DIR__ . '/im.php';
         break;
-}
-```
-
-### 访问统计
-```php
-// 记录脚本下载统计
-if (isScriptRequest()) {
-    $logFile = __DIR__ . '/../logs/download.log';
-    $logEntry = date('Y-m-d H:i:s') . " - " . $_SERVER['REMOTE_ADDR'] . " - " . $_SERVER['HTTP_USER_AGENT'] . "\n";
-    file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
 }
 ```
 
@@ -505,6 +450,15 @@ curl -f im.sh.cn | bash     # 失败时退出
 ## 📄 许可证
 
 MIT License - 自由使用、修改和分发。
+
+## 🙏 致谢
+
+感谢以下开发者的优秀脚本：
+- **秋水大佬** - Bench.sh综合性能测试
+- **BlueSkyXN** - SpeedTestCN国内三网测速
+- **zhucaidan** - mtr_trace回程路由测试
+- **zq** - besttrace一键回程测试脚本
+- **YABS** - GeekBench集成支持
 
 ## 📚 相关链接
 

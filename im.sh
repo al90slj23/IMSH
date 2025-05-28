@@ -25,6 +25,14 @@ else
     exit 1
 fi
 
+# 加载功能模块
+if [ -f "$SCRIPT_DIR/sh/im.sh.functions" ]; then
+    source "$SCRIPT_DIR/sh/im.sh.functions"
+else
+    echo "错误: 找不到功能模块文件 sh/im.sh.functions"
+    exit 1
+fi
+
 # 🎯 智能执行检测
 # 如果用户直接curl下载脚本，显示使用提示
 if [ "${BASH_SOURCE[0]}" = "${0}" ] && [ -t 1 ]; then

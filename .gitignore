@@ -1,0 +1,55 @@
+# 日志文件
+*.log
+*.logs
+
+# 临时文件
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE文件
+.vscode/
+.idea/
+*.sublime-*
+
+# 运行时文件
+*.pid
+*.lock
+
+# 测试结果文件
+bench_result_*.txt
+speedtest_*.log
+debug.log
+
+# 缓存文件
+.cache/
+cache/
+
+# 备份文件
+*.bak
+*.backup
+
+# 压缩文件
+*.tar.gz
+*.zip
+*.rar
+
+# 敏感信息
+.env
+.env.local
+config.local.*
+
+# 第三方脚本下载的临时文件
+UnixBench/
+geekbench*/
+speedtest.sh
+besttrace*
+mtr_trace* 
