@@ -1,162 +1,29 @@
-# IMSH - 智能检测安装脚本
+# IMSH - 智能检测框架
 
-> **IM就是这么简单！** 一行代码实现智能检测：浏览器访问显示网站，curl访问下载脚本。
+> **IM就是这么简单！** 一行代码让你的网站实现智能检测：浏览器访问显示正常网站，curl访问下载自定义脚本。
 
-## 🚀 IM.SH v2.0.0 - 超强大VPS配置脚本
+## 🎯 核心理念
 
-### ✨ 全新功能特性
+IMSH是一个轻量级的智能检测框架，让任何网站都能在不影响正常访问的情况下，为命令行用户提供脚本下载服务。
 
-- **🎨 精美界面**: ASCII艺术横幅 + 彩色交互界面
-- **🔧 智能安装**: 7种安装模式，满足不同需求
-- **🐳 容器化**: Docker + Docker Compose 一键部署
-- **🌐 全栈环境**: Node.js + Python + Nginx 完整Web栈
-- **🛡️ 安全加固**: 防火墙 + SSH安全 + 系统加固
-- **⚡ 性能优化**: BBR加速 + 内核调优 + 监控工具
-- **🎯 实用工具**: 50+别名命令 + 系统监控 + 快捷操作
+### ✨ 核心特性
 
-## 🎯 使用方法
+- **🔍 智能检测**: 自动识别浏览器和curl访问
+- **🚀 零影响集成**: 浏览器用户完全无感知
+- **📦 一行代码**: 最小侵入性，仅需一行代码
+- **🌐 框架通用**: 支持10+主流Web框架
+- **🛡️ SEO友好**: 搜索引擎正常索引，不影响SEO
+- **⚡ 高性能**: 毫秒级检测，无性能损耗
 
-### 🚀 一键安装（推荐）
+## 🚀 快速开始
+
+### 第一步：下载IMSH框架
 ```bash
-curl -fsSL https://im.sh.cn | bash
+git clone https://github.com/al90slj23/IMSH.git
+# 或下载到你的项目目录
 ```
 
-### 🔧 命令行模式
-```bash
-# 完整安装所有组件
-curl -fsSL https://im.sh.cn | bash -s -- --full
-
-# 仅安装Docker环境
-curl -fsSL https://im.sh.cn | bash -s -- --docker
-
-# 安装Web开发环境
-curl -fsSL https://im.sh.cn | bash -s -- --web
-
-# 系统安全加固
-curl -fsSL https://im.sh.cn | bash -s -- --security
-
-# 性能优化
-curl -fsSL https://im.sh.cn | bash -s -- --performance
-
-# 查看帮助
-curl -fsSL https://im.sh.cn | bash -s -- --help
-```
-
-## 📦 安装组件详情
-
-### 🔧 基础工具包
-- **系统工具**: curl, wget, git, vim, nano, htop, tree
-- **压缩工具**: unzip, zip, tar
-- **终端工具**: screen, tmux
-- **编译工具**: build-essential, gcc, make
-
-### 🐳 Docker环境
-- **Docker Engine**: 最新稳定版
-- **Docker Compose**: 容器编排工具
-- **用户权限**: 自动配置docker组权限
-- **服务管理**: 自动启动和开机自启
-
-### 🌐 Node.js环境
-- **Node.js**: 最新LTS版本
-- **包管理器**: npm, yarn, pnpm
-- **进程管理**: PM2 (生产环境进程管理)
-- **全局工具**: 常用开发工具包
-
-### 🐍 Python环境
-- **Python3**: 最新版本 + pip
-- **虚拟环境**: virtualenv, pipenv, poetry
-- **常用库**: requests, beautifulsoup4, flask, django
-- **开发工具**: 完整Python开发栈
-
-### 🌍 Nginx Web服务器
-- **Nginx**: 高性能Web服务器
-- **自动配置**: 开机自启 + 基础配置
-- **防火墙**: 自动开放80/443端口
-- **SSL就绪**: 支持HTTPS配置
-
-### 🛡️ 安全加固
-- **防火墙**: UFW(Ubuntu) / Firewalld(CentOS)
-- **SSH安全**: 禁用root登录 + 密钥认证
-- **端口管理**: 仅开放必要端口(22/80/443)
-- **配置备份**: 自动备份原始配置
-
-### ⚡ 性能优化
-- **网络优化**: BBR拥塞控制算法
-- **内核参数**: TCP缓冲区优化
-- **文件系统**: 文件描述符限制优化
-- **内存管理**: Swap使用策略调优
-
-### 📊 监控工具
-- **系统监控**: htop (进程监控)
-- **IO监控**: iotop (磁盘IO监控)
-- **网络监控**: nethogs (网络流量监控)
-- **磁盘分析**: ncdu (磁盘使用分析)
-
-### 🎯 实用别名
-```bash
-# 系统信息
-sysinfo     # 系统详细信息
-meminfo     # 内存使用情况
-diskinfo    # 磁盘使用情况
-cpuinfo     # CPU信息
-myip        # 公网IP地址
-
-# Docker快捷命令
-dps         # docker ps
-dpsa        # docker ps -a
-di          # docker images
-dstop       # 停止所有容器
-drm         # 删除所有容器
-
-# 进程管理
-psg <name>  # 搜索进程
-topcpu      # CPU使用率最高的进程
-topmem      # 内存使用率最高的进程
-
-# 系统维护
-update      # 系统更新
-install     # 软件安装
-ports       # 查看端口占用
-```
-
-## 🎛️ 交互式安装菜单
-
-运行 `curl -fsSL https://im.sh.cn | bash` 后，您将看到：
-
-```
-██╗███╗   ███╗   ███████╗██╗  ██╗
-██║████╗ ████║   ██╔════╝██║  ██║
-██║██╔████╔██║   ███████╗███████║
-██║██║╚██╔╝██║   ╚════██║██╔══██║
-██║██║ ╚═╝ ██║██╗███████║██║  ██║
-╚═╝╚═╝     ╚═╝╚═╝╚══════╝╚═╝  ╚═╝
-
-==================================================
-        IM.SH - 超强大VPS一键配置脚本
-        版本: 2.0.0
-        网站: https://im.sh.cn
-==================================================
-
-请选择安装模式：
-1) 🚀 完整安装 (推荐) - 安装所有组件
-2) 🔧 自定义安装 - 选择要安装的组件  
-3) 📦 仅基础工具 - 只安装基础工具
-4) 🐳 Docker环境 - 安装Docker相关
-5) 🌐 Web环境 - 安装Nginx + Node.js + Python
-6) 🛡️ 安全加固 - 防火墙 + SSH安全
-7) ⚡ 性能优化 - 系统调优
-0) 退出
-```
-
-## 🌟 IMSH框架集成
-
-### 完全透明集成
-- **浏览器访问**: 显示原网站内容，零影响
-- **curl访问**: 自动下载安装脚本
-- **SEO友好**: 搜索引擎正常索引
-- **用户体验**: 完全无感知集成
-
-### 一行代码集成
+### 第二步：一行代码集成
 
 #### ThinkPHP 6.x
 ```php
@@ -164,7 +31,7 @@ ports       # 查看端口占用
 Route::any("/", function() { require_once root_path() . 'IMSH/im/im.php'; });
 ```
 
-#### Laravel 8.x/9.x/10.x
+#### Laravel 8.x/9.x/10.x/11.x
 ```php
 // routes/web.php
 Route::any('/', function() { require_once base_path('IMSH/im/im.php'); });
@@ -172,11 +39,13 @@ Route::any('/', function() { require_once base_path('IMSH/im/im.php'); });
 
 #### Express.js (Node.js)
 ```javascript
+// app.js
 app.all('/', (req, res) => {
-    if (req.get('User-Agent').includes('curl')) {
+    const userAgent = req.get('User-Agent') || '';
+    if (userAgent.toLowerCase().includes('curl')) {
         res.sendFile(path.join(__dirname, 'IMSH/im.sh'));
     } else {
-        // 调用原有首页逻辑
+        // 调用你的原有首页逻辑
         res.render('index');
     }
 });
@@ -184,167 +53,281 @@ app.all('/', (req, res) => {
 
 #### Django (Python)
 ```python
-def imsh_handler(request):
-    user_agent = request.META.get('HTTP_USER_AGENT', '')
-    if 'curl' in user_agent.lower():
+# views.py
+def index(request):
+    user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+    if 'curl' in user_agent:
         with open('IMSH/im.sh', 'r') as f:
             script = f.read()
         return HttpResponse(script, content_type='text/plain')
     else:
+        // 调用你的原有首页逻辑
         return render(request, 'index.html')
 ```
 
-## 📋 系统支持
-
-### ✅ 支持的Linux发行版
-- **Ubuntu** 18.04+ (APT)
-- **Debian** 9+ (APT)  
-- **CentOS** 7+ (YUM)
-- **RHEL** 7+ (YUM)
-- **Fedora** 30+ (DNF)
-- **Arch Linux** (Pacman)
-- **openSUSE** (Zypper)
-
-### ✅ 支持的Web框架
-- **PHP**: ThinkPHP, Laravel, CodeIgniter, Symfony, Yii2
-- **Node.js**: Express.js, Koa.js, Fastify, Next.js
-- **Python**: Django, Flask, FastAPI
-- **Java**: Spring Boot
-- **C#**: ASP.NET Core
-- **原生**: PHP, HTML
-
-## 🔍 安装日志
-
-所有安装过程都会记录到 `/var/log/imsh-install.log`，方便问题排查：
-
-```bash
-# 查看安装日志
-tail -f /var/log/imsh-install.log
-
-# 搜索错误信息
-grep ERROR /var/log/imsh-install.log
+#### Flask (Python)
+```python
+# app.py
+@app.route('/')
+def index():
+    user_agent = request.headers.get('User-Agent', '').lower()
+    if 'curl' in user_agent:
+        return send_file('IMSH/im.sh', mimetype='text/plain')
+    else:
+        // 调用你的原有首页逻辑
+        return render_template('index.html')
 ```
 
-## 🎨 成功案例
+#### Spring Boot (Java)
+```java
+@Controller
+public class IndexController {
+    @RequestMapping("/")
+    public ResponseEntity<?> index(HttpServletRequest request) {
+        String userAgent = request.getHeader("User-Agent");
+        if (userAgent != null && userAgent.toLowerCase().contains("curl")) {
+            // 返回脚本文件
+            Resource resource = new ClassPathResource("IMSH/im.sh");
+            return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(resource);
+        } else {
+            // 调用你的原有首页逻辑
+            return ResponseEntity.ok("index");
+        }
+    }
+}
+```
 
-### im.sh.cn 实际部署
-- **网站**: 我的首航书签管理系统
+#### ASP.NET Core (C#)
+```csharp
+[Route("/")]
+public IActionResult Index()
+{
+    var userAgent = Request.Headers["User-Agent"].ToString().ToLower();
+    if (userAgent.Contains("curl"))
+    {
+        var scriptPath = Path.Combine(Directory.GetCurrentDirectory(), "IMSH", "im.sh");
+        return PhysicalFile(scriptPath, "text/plain");
+    }
+    else
+    {
+        // 调用你的原有首页逻辑
+        return View();
+    }
+}
+```
+
+#### 原生PHP
+```php
+<?php
+// index.php
+$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+if (stripos($userAgent, 'curl') !== false) {
+    header('Content-Type: text/plain');
+    readfile('IMSH/im.sh');
+    exit;
+} else {
+    // 你的原有首页逻辑
+    include 'your-original-index.php';
+}
+?>
+```
+
+### 第三步：自定义你的脚本
+
+编辑 `IMSH/im.sh` 文件，添加你想要的安装逻辑：
+
+```bash
+#!/bin/bash
+echo "欢迎使用我的VPS配置脚本！"
+
+# 添加你的安装逻辑
+install_my_software() {
+    echo "安装我的软件..."
+    # 你的安装命令
+}
+
+# 调用安装函数
+install_my_software
+```
+
+## 🎨 实际效果演示
+
+### 浏览器访问
+```
+用户在浏览器中访问 https://yourdomain.com
+↓
+显示你的正常网站内容（完全不受影响）
+```
+
+### curl访问
+```bash
+curl https://yourdomain.com
+# 自动下载并可以执行你的自定义脚本
+
+# 一键执行
+curl -fsSL https://yourdomain.com | bash
+```
+
+## 🌟 成功案例
+
+### im.sh.cn
+- **网站功能**: 我的首航书签管理系统
 - **浏览器访问**: 完整的Web应用界面
 - **curl访问**: 超强VPS配置脚本
-- **完美集成**: 零影响，完全透明
+- **集成方式**: ThinkPHP 6 + 一行路由代码
+- **效果**: 完美运行，零影响
 
-### 使用统计
-- **GitHub Stars**: 持续增长
-- **下载次数**: 每日数百次
-- **用户反馈**: 5星好评
-- **社区支持**: 活跃的Issue和PR
+## 🔧 工作原理
 
-## 🛠️ 高级用法
+### 智能检测逻辑
+```
+1. 用户访问网站首页
+2. 检测 User-Agent 头部
+3. 如果包含 "curl" → 返回脚本文件
+4. 如果是浏览器 → 调用原有首页逻辑
+```
 
-### 自定义脚本
-您可以修改 `IMSH/im.sh` 来添加自己的安装逻辑：
+### 技术特点
+- **毫秒级检测**: User-Agent检测极快
+- **零性能影响**: 仅增加一次字符串检查
+- **完全透明**: 浏览器用户完全无感知
+- **SEO友好**: 搜索引擎爬虫正常访问
+- **缓存兼容**: 不影响CDN和缓存策略
 
-```bash
-# 在install_custom_software函数中添加
-install_custom_software() {
-    log_step "安装自定义软件..."
+## 📁 目录结构
+
+```
+IMSH/
+├── README.md           # 框架集成说明（本文件）
+├── SCRIPT_README.md    # im.sh脚本功能说明
+├── install.sh          # 框架安装脚本
+├── im.sh               # 你的自定义脚本
+└── im/
+    ├── im.php          # PHP检测逻辑
+    ├── im.js           # Node.js检测逻辑
+    └── im.py           # Python检测逻辑
+```
+
+## 🛠️ 高级配置
+
+### 自定义检测逻辑
+你可以修改 `im/im.php` 来自定义检测逻辑：
+
+```php
+<?php
+// 自定义User-Agent检测
+function isScriptRequest() {
+    $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
     
-    # 安装您的软件
-    $SUDO_CMD apt-get install -y your-software
+    // 检测curl、wget等命令行工具
+    $cliTools = ['curl', 'wget', 'httpie', 'lynx'];
     
-    # 配置您的服务
-    $SUDO_CMD systemctl enable your-service
-    $SUDO_CMD systemctl start your-service
+    foreach ($cliTools as $tool) {
+        if (stripos($userAgent, $tool) !== false) {
+            return true;
+        }
+    }
     
-    log_success "自定义软件安装完成"
+    return false;
 }
 
-# 在main函数中调用
-main() {
-    # ... 现有逻辑
-    install_custom_software
-    # ...
+if (isScriptRequest()) {
+    // 返回脚本
+    header('Content-Type: text/plain');
+    readfile(__DIR__ . '/../im.sh');
+    exit;
+} else {
+    // 调用原有逻辑
+    require_once __DIR__ . '/../../app/controller/Index.php';
+    $controller = new \app\controller\Index();
+    return $controller->index();
+}
+?>
+```
+
+### 多脚本支持
+```php
+// 根据不同参数返回不同脚本
+$script = $_GET['script'] ?? 'default';
+
+switch ($script) {
+    case 'docker':
+        readfile(__DIR__ . '/../scripts/docker.sh');
+        break;
+    case 'nodejs':
+        readfile(__DIR__ . '/../scripts/nodejs.sh');
+        break;
+    default:
+        readfile(__DIR__ . '/../im.sh');
+        break;
 }
 ```
 
-### 环境变量配置
-```bash
-# 设置安装选项
-export IMSH_SKIP_DOCKER=1      # 跳过Docker安装
-export IMSH_SKIP_NODEJS=1      # 跳过Node.js安装
-export IMSH_CUSTOM_NGINX=1     # 使用自定义Nginx配置
-
-curl -fsSL https://im.sh.cn | bash
+### 访问统计
+```php
+// 记录脚本下载统计
+if (isScriptRequest()) {
+    $logFile = __DIR__ . '/../logs/download.log';
+    $logEntry = date('Y-m-d H:i:s') . " - " . $_SERVER['REMOTE_ADDR'] . " - " . $_SERVER['HTTP_USER_AGENT'] . "\n";
+    file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
+}
 ```
 
-### 批量部署
-```bash
-# 创建批量部署脚本
-#!/bin/bash
-servers=("server1.com" "server2.com" "server3.com")
-
-for server in "${servers[@]}"; do
-    echo "部署到 $server..."
-    ssh root@$server "curl -fsSL https://im.sh.cn | bash -s -- --full"
-done
-```
-
-## 🔧 故障排除
+## 🔍 故障排除
 
 ### 常见问题
 
-1. **权限错误**
-   ```bash
-   # 确保有sudo权限或使用root用户
-   sudo curl -fsSL https://im.sh.cn | bash
-   ```
+1. **脚本无法下载**
+   - 检查文件路径是否正确
+   - 确保im.sh文件有读取权限
+   - 验证路由配置是否生效
 
-2. **网络问题**
-   ```bash
-   # 使用代理
-   export https_proxy=http://proxy:port
-   curl -fsSL https://im.sh.cn | bash
-   ```
+2. **浏览器显示脚本内容**
+   - 检查User-Agent检测逻辑
+   - 确认原有首页逻辑正确调用
+   - 清除浏览器缓存
 
-3. **包管理器问题**
-   ```bash
-   # 手动更新包管理器
-   sudo apt update  # Ubuntu/Debian
-   sudo yum update  # CentOS/RHEL
-   ```
+3. **框架集成问题**
+   - 确保路由优先级正确
+   - 检查框架版本兼容性
+   - 查看错误日志
 
-### 调试模式
+### 调试方法
 ```bash
-# 启用详细输出
-curl -fsSL https://im.sh.cn | bash -x
+# 测试curl访问
+curl -v https://yourdomain.com
 
-# 查看安装日志
-tail -f /var/log/imsh-install.log
+# 测试浏览器User-Agent
+curl -H "User-Agent: Mozilla/5.0" https://yourdomain.com
+
+# 查看服务器日志
+tail -f /var/log/nginx/access.log
 ```
-
-## 📚 更多资源
-
-- **🌐 官网**: https://im.sh.cn
-- **📖 文档**: https://github.com/al90slj23/IMSH
-- **🐛 问题反馈**: https://github.com/al90slj23/IMSH/issues
-- **💬 讨论**: https://github.com/al90slj23/IMSH/discussions
-- **📧 联系**: 通过GitHub Issues
 
 ## 🤝 贡献
 
-欢迎贡献代码、报告问题、提出建议！
+欢迎贡献更多框架的集成方案！
 
 1. Fork 项目
-2. 创建特性分支
-3. 提交更改
-4. 发起 Pull Request
+2. 添加新框架的集成代码
+3. 更新README文档
+4. 提交Pull Request
 
 ## 📄 许可证
 
 MIT License - 自由使用、修改和分发。
 
+## 📚 相关链接
+
+- **🌐 官网**: https://im.sh.cn
+- **📖 GitHub**: https://github.com/al90slj23/IMSH
+- **🐛 问题反馈**: https://github.com/al90slj23/IMSH/issues
+- **📋 脚本功能说明**: [SCRIPT_README.md](SCRIPT_README.md)
+
 ---
 
-**🚀 IMSH - 让VPS配置变得简单强大！**
+**🚀 IMSH - 让任何网站都能智能检测！**
 
-> 一行命令，完整环境。从此告别繁琐的服务器配置！ 
+> 一行代码，双重体验。浏览器用户看网站，命令行用户得脚本！ 
