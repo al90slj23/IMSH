@@ -91,23 +91,24 @@ show_help() {
     echo "  00         - 退出程序（需要输入yes确认）"
     echo ""
     echo -e "${GREEN}[*] 快速跳转:${NC}"
-    echo "  111        - 直接跳转到Bench.sh综合测试"
-    echo "  112        - 直接跳转到UnixBench性能测试"
-    echo "  1121       - 直接跳转到GeekBench处理器测试"
-    echo "  113        - 直接跳转到测速脚本菜单"
-    echo "  1131       - 直接跳转到SpeedTestCN（国内三网测速）"
-    echo "  1132       - 直接跳转到bench.monster（国外测速）"
-    echo "  1133       - 直接跳转到本地测速"
-    echo "  114        - 直接跳转到网络测试"
-    echo "  1141       - 直接跳转到mtr_trace（回程国内三网路由）"
-    echo "  1142       - 直接跳转到besttrace（一键回程测试脚本）"
-    echo "  1143       - 直接跳转到RegionRestrictionCheck（流媒体测试）"
-    echo "  1144       - 直接跳转到NextTrace（可视化路由追踪）"
-    echo "  1145       - 直接跳转到网络连通性测试"
-    echo "  121        - 直接跳转到网络优化"
-    echo "  1211       - 直接跳转到NetSpeed（TCP优化）"
-    echo "  122        - 直接跳转到Docker安装"
-    echo "  131        - 直接跳转到系统清理"
+    echo "  11         - 直接跳转到ToolBox by vps.dance"
+    echo "  12         - 直接跳转到ecs（融合怪测评脚本）"
+    echo "  211        - 直接跳转到Bench.sh综合测试"
+    echo "  212        - 直接跳转到UnixBench性能测试"
+    echo "  2121       - 直接跳转到GeekBench处理器测试"
+    echo "  213        - 直接跳转到测速脚本菜单"
+    echo "  2131       - 直接跳转到SpeedTestCN（国内三网测速）"
+    echo "  2132       - 直接跳转到bench.monster（国外测速）"
+    echo "  2133       - 直接跳转到本地测速"
+    echo "  214        - 直接跳转到网络测试"
+    echo "  2141       - 直接跳转到mtr_trace（回程国内三网路由）"
+    echo "  2142       - 直接跳转到besttrace（一键回程测试脚本）"
+    echo "  2143       - 直接跳转到RegionRestrictionCheck（流媒体测试）"
+    echo "  2144       - 直接跳转到NextTrace（可视化路由追踪）"
+    echo "  2145       - 直接跳转到网络连通性测试"
+    echo "  31         - 直接跳转到网络优化"
+    echo "  311        - 直接跳转到NetSpeed（TCP优化）"
+    echo "  32         - 直接跳转到Docker安装"
     echo "  数字串     - 直接跳转到对应功能"
     echo ""
     echo -e "${GREEN}[*] 特殊命令:${NC}"
@@ -134,97 +135,103 @@ execute_direct_command() {
     log_info "执行直接命令: $command"
     
     case "$command" in
-        "111")
+        "11")
+            execute_toolbox_vps_dance
+            ;;
+        "12")
+            execute_ecs_spiritlhls
+            ;;
+        "211")
             execute_bench_test
             ;;
-        "112")
+        "212")
             execute_unixbench_test
             ;;
-        "1121")
+        "2121")
             execute_geekbench_test
             ;;
-        "113")
+        "213")
             show_speed_test_menu
             ;;
-        "1131")
+        "2131")
             execute_speed_test
             ;;
-        "1132")
+        "2132")
             execute_international_speed_test
             ;;
-        "1133")
+        "2133")
             execute_local_speed_test
             ;;
-        "114")
+        "214")
             show_network_test_menu
             ;;
-        "1141")
+        "2141")
             execute_route_trace_test
             ;;
-        "1142")
+        "2142")
             execute_besttrace_test
             ;;
-        "1143")
+        "2143")
             execute_region_restriction_check
             ;;
-        "1144")
+        "2144")
             execute_nexttrace_test
             ;;
-        "1145")
+        "2145")
             execute_network_connectivity_test
             ;;
-        "121")
+        "31")
             show_network_optimization_menu
             ;;
-        "1211")
+        "311")
             execute_netspeed_optimization
             ;;
-        "122")
+        "32")
             execute_docker_install
             ;;
-        "123")
+        "33")
             execute_env_config
             ;;
-        "124")
+        "34")
             execute_software_install
             ;;
-        "125")
+        "35")
             execute_system_optimize
             ;;
-        "131")
+        "41")
             execute_system_clean
             ;;
-        "132")
+        "42")
             execute_log_manage
             ;;
-        "133")
+        "43")
             execute_backup_restore
             ;;
-        "134")
+        "44")
             execute_security_check
             ;;
-        "141")
+        "51")
             execute_performance_monitor
             ;;
-        "142")
+        "52")
             execute_resource_monitor
             ;;
-        "143")
+        "53")
             execute_service_monitor
             ;;
-        "144")
+        "54")
             execute_alert_config
             ;;
-        "151")
+        "61")
             execute_file_manage
             ;;
-        "152")
+        "62")
             execute_process_manage
             ;;
-        "153")
+        "63")
             execute_network_tools
             ;;
-        "154")
+        "64")
             execute_system_info
             ;;
         *)

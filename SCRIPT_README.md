@@ -15,14 +15,16 @@ curl im.sh.cn | bash
 
 ### 🔧 快速跳转功能
 ```bash
-curl im.sh.cn | bash -s -- 111   # Bench.sh综合测试
-curl im.sh.cn | bash -s -- 121   # 网络优化菜单
-curl im.sh.cn | bash -s -- 1211  # NetSpeed TCP优化
-curl im.sh.cn | bash -s -- 1131  # SpeedTestCN国内三网测速
-curl im.sh.cn | bash -s -- 1141  # mtr_trace回程路由测试
-curl im.sh.cn | bash -s -- 1142  # besttrace一键回程测试
-curl im.sh.cn | bash -s -- 1143  # RegionRestrictionCheck流媒体测试
-curl im.sh.cn | bash -s -- 1144  # NextTrace可视化路由追踪
+curl im.sh.cn | bash -s -- 11    # ToolBox by vps.dance
+curl im.sh.cn | bash -s -- 12    # ecs（融合怪测评脚本）
+curl im.sh.cn | bash -s -- 211   # Bench.sh综合测试
+curl im.sh.cn | bash -s -- 31    # 网络优化菜单
+curl im.sh.cn | bash -s -- 311   # NetSpeed TCP优化
+curl im.sh.cn | bash -s -- 2131  # SpeedTestCN国内三网测速
+curl im.sh.cn | bash -s -- 2141  # mtr_trace回程路由测试
+curl im.sh.cn | bash -s -- 2142  # besttrace一键回程测试
+curl im.sh.cn | bash -s -- 2143  # RegionRestrictionCheck流媒体测试
+curl im.sh.cn | bash -s -- 2144  # NextTrace可视化路由追踪
 ```
 
 ### 🔄 下载后运行
@@ -79,10 +81,38 @@ curl -L http://im.sh.cn | bash
 
 ## 📋 完整功能菜单
 
+### 🎯 综合脚本
+
+#### ToolBox by vps.dance
+- **11** - **ToolBox by vps.dance** - 多功能VPS工具箱
+  - 系统信息检测
+  - 网络测试工具
+  - 性能测试脚本
+  - 系统优化工具
+  - 安全检测功能
+  - 流媒体解锁检测
+  - TikTok解锁检测（已添加）
+  - 支持镜像加速访问
+
+#### ecs（融合怪测评脚本） by spiritLHLS
+- **12** - **ecs（融合怪测评脚本）** - 全面系统测评
+  - 基础信息查询（系统、硬件、网络信息）
+  - CPU性能测试（支持GeekBench 4/5/6）
+  - 内存性能测试
+  - 磁盘I/O测试（dd和fio两种方式）
+  - 流媒体解锁测试（Netflix、Disney+、YouTube等）
+  - TikTok解锁检测
+  - 三网回程路由测试
+  - IP质量检测（15家数据库查询）
+  - 网络测速（自动更新测速节点）
+  - 支持多系统多架构（Ubuntu 18+, Debian 8+, CentOS 7+等）
+  - 自动上传结果并生成分享链接
+  - 支持交互式和无交互式执行
+
 ### 🧪 测试脚本
 
 #### 综合测试
-- **111** - **Bench.sh** - 秋水大佬的综合性能测试
+- **211** - **Bench.sh** - 秋水大佬的综合性能测试
   - 系统信息检测
   - CPU性能测试
   - 内存性能测试
@@ -90,45 +120,45 @@ curl -L http://im.sh.cn | bash
   - 网络测速（全球节点）
 
 #### 硬件测试
-- **112** - **UnixBench** - 综合性能基准测试
+- **212** - **UnixBench** - 综合性能基准测试
   - CPU整数运算
   - CPU浮点运算
   - 系统调用性能
   - 文件系统性能
   - 多线程性能
-- **1121** - **GeekBench** - 跨平台处理器基准测试
+- **2121** - **GeekBench** - 跨平台处理器基准测试
   - 单核性能测试
   - 多核性能测试
   - 内存性能测试
   - 与全球设备对比
 
 #### 测速脚本
-- **1131** - **SpeedTestCN（国内三网测速） by BlueSkyXN**
+- **2131** - **SpeedTestCN（国内三网测速） by BlueSkyXN**
   - 电信网络测速
   - 联通网络测速
   - 移动网络测速
   - 多节点对比
-- **1132** - **bench.monster（国外测速）**
+- **2132** - **bench.monster（国外测速）**
   - 全球节点测速
   - 延迟测试
   - 带宽测试
   - 网络质量评估
-- **1133** - **本地测速** - 本地网络性能测试
+- **2133** - **本地测速** - 本地网络性能测试
   - 本地回环测试
   - 内网速度测试
 
 #### 网络测试
-- **1141** - **mtr_trace（回程国内三网路由） by zhucaidan**
+- **2141** - **mtr_trace（回程国内三网路由） by zhucaidan**
   - 电信回程路由
   - 联通回程路由
   - 移动回程路由
   - 路由跳数分析
-- **1142** - **besttrace（一键回程测试脚本） by zq**
+- **2142** - **besttrace（一键回程测试脚本） by zq**
   - 8个测试节点
   - 详细路由信息
   - 延迟分析
   - 网络质量评估
-- **1143** - **RegionRestrictionCheck（流媒体测试） by lmc999**
+- **2143** - **RegionRestrictionCheck（流媒体测试） by lmc999**
   - Netflix 解锁检测
   - Disney+ 解锁检测
   - YouTube Premium 解锁检测
@@ -138,7 +168,7 @@ curl -L http://im.sh.cn | bash
   - TikTok 解锁检测
   - 支持IPv4/IPv6双栈检测
   - 支持多语言界面
-- **1144** - **NextTrace（可视化路由追踪） by sjlleo**
+- **2144** - **NextTrace（可视化路由追踪） by sjlleo**
   - 现代化路由追踪工具
   - 支持IPv4/IPv6双栈
   - 可视化路由地图
@@ -147,13 +177,13 @@ curl -L http://im.sh.cn | bash
   - 快速测试中国三网
   - 详细地理位置和ASN信息
   - 轻量化Golang实现
-- **1145** - **网络连通性测试**
+- **2145** - **网络连通性测试**
   - DNS解析测试
   - 端口连通性测试
   - 网络延迟测试
 
 ### 🔧 安装脚本
-- **121** - **网络优化 - TCP加速和内核优化**
+- **31** - **网络优化 - TCP加速和内核优化**
   - **NetSpeed** - ylx2016开发的Linux网络加速一键脚本
     - 项目地址: https://github.com/ylx2016/Linux-NetSpeed
     - 功能: BBR/锐速等TCP拥塞控制算法优化
@@ -162,44 +192,44 @@ curl -L http://im.sh.cn | bash
   - 内核升级优化
   - IP质检工具
   - DD脚本系统重装
-- **122** - **Docker安装 - Docker环境一键安装**
+- **32** - **Docker安装 - Docker环境一键安装**
   - Docker CE安装
   - Docker Compose安装
   - 容器环境配置
   - 镜像加速配置
-- **123** - **环境配置 - 开发环境配置**
+- **33** - **环境配置 - 开发环境配置**
   - 编程语言环境
   - 开发工具安装
   - 环境变量配置
   - 依赖包管理
-- **124** - **软件安装 - 常用软件安装**
+- **34** - **软件安装 - 常用软件安装**
   - 系统工具安装
   - 网络工具安装
   - 监控工具安装
   - 安全工具安装
-- **125** - **系统优化 - 系统性能优化**
+- **35** - **系统优化 - 系统性能优化**
   - 内核参数优化
   - 文件系统优化
   - 网络参数调优
   - 安全配置优化
 
 ### 🧹 维护脚本
-- **131** - **系统清理** - 清理系统垃圾文件
-- **132** - **日志管理** - 系统日志管理
-- **133** - **备份恢复** - 数据备份和恢复
-- **134** - **安全检查** - 系统安全检查
+- **41** - **系统清理** - 清理系统垃圾文件
+- **42** - **日志管理** - 系统日志管理
+- **43** - **备份恢复** - 数据备份和恢复
+- **44** - **安全检查** - 系统安全检查
 
 ### 📊 监控脚本
-- **141** - **性能监控** - 系统性能实时监控
-- **142** - **资源监控** - 系统资源使用监控
-- **143** - **服务监控** - 服务状态监控
-- **144** - **告警设置** - 监控告警配置
+- **51** - **性能监控** - 系统性能实时监控
+- **52** - **资源监控** - 系统资源使用监控
+- **53** - **服务监控** - 服务状态监控
+- **54** - **告警设置** - 监控告警配置
 
 ### 🛠️ 工具脚本
-- **151** - **文件管理** - 文件操作工具
-- **152** - **进程管理** - 进程管理工具
-- **153** - **网络工具** - 网络诊断工具
-- **154** - **系统信息** - 系统信息查看
+- **61** - **文件管理** - 文件操作工具
+- **62** - **进程管理** - 进程管理工具
+- **63** - **网络工具** - 网络诊断工具
+- **64** - **系统信息** - 系统信息查看
 
 ## 🎮 智能导航系统
 
@@ -263,6 +293,20 @@ imsh/
 - **功能模块**: 具体功能实现、第三方脚本集成
 
 ## 🔧 集成的第三方脚本
+
+### 综合工具脚本
+- **ToolBox** - vps.dance开发的多功能VPS工具箱
+  - 项目地址: https://github.com/vps-dance/toolbox
+  - 官网: https://vps.dance
+  - 功能: 系统检测、网络测试、性能测试、流媒体解锁检测
+  - 特点: 集成TikTok解锁检测、支持镜像加速、界面友好
+
+- **ecs（融合怪测评脚本）** - spiritLHLS开发的全面系统测评脚本
+  - 项目地址: https://github.com/spiritLHLS/ecs
+  - Golang版本: https://github.com/oneclickvirt/ecs
+  - 测评频道: https://t.me/vps_reviews
+  - 功能: 基础信息、CPU/内存/磁盘测试、流媒体解锁、路由测试、IP质量检测
+  - 特点: 融合多种测试脚本、自动上传结果、支持多系统多架构、内置CDN加速
 
 ### 性能测试脚本
 - **Bench.sh** - 秋水大佬开发的综合性能测试脚本
@@ -534,6 +578,8 @@ execute_my_custom_test() {
 ## 🙏 致谢
 
 感谢以下开发者的优秀脚本：
+- **vps.dance** - ToolBox多功能VPS工具箱
+- **spiritLHLS** - ecs（融合怪测评脚本）
 - **秋水大佬** - Bench.sh综合性能测试、UnixBench优化版本
 - **BlueSkyXN** - SpeedTestCN国内三网测速
 - **ylx2016** - NetSpeed Linux网络加速一键脚本
@@ -559,14 +605,16 @@ execute_my_custom_test() {
 > 一行命令，全面测试。性能、网络、系统，一个脚本搞定！ 
 
 ### 🚀 快速跳转编号
-- `111` - Bench.sh综合测试
-- `112` - UnixBench性能测试
-- `1121` - GeekBench处理器测试
-- `1131` - SpeedTestCN国内三网测速
-- `1132` - bench.monster国外测速
-- `1133` - 本地测速
-- `1141` - mtr_trace回程路由测试
-- `1142` - besttrace一键回程测试
-- `1143` - RegionRestrictionCheck流媒体测试
-- `1144` - NextTrace可视化路由追踪
-- `1145` - 网络连通性测试 
+- `11` - ToolBox by vps.dance
+- `12` - ecs（融合怪测评脚本）
+- `211` - Bench.sh综合测试
+- `212` - UnixBench性能测试
+- `2121` - GeekBench处理器测试
+- `2131` - SpeedTestCN国内三网测速
+- `2132` - bench.monster国外测速
+- `2133` - 本地测速
+- `2141` - mtr_trace回程路由测试
+- `2142` - besttrace一键回程测试
+- `2143` - RegionRestrictionCheck流媒体测试
+- `2144` - NextTrace可视化路由追踪
+- `2145` - 网络连通性测试 

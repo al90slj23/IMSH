@@ -1385,4 +1385,359 @@ execute_dd_reinstall() {
     echo "• 相关脚本：https://git.beta.gs/"
     echo "• 备用脚本：https://www.cxthhhhh.com/network-reinstall-system-modify"
     echo ""
+}
+
+execute_toolbox_vps_dance() {
+    log_step "执行ToolBox by vps.dance..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "           ToolBox by vps.dance"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于ToolBox:${NC}"
+    echo "ToolBox是vps.dance开发的多功能VPS工具箱，集成了多种实用功能。"
+    echo "作者：vps.dance"
+    echo "项目地址：https://github.com/vps-dance/toolbox"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 系统信息检测"
+    echo "• 网络测试工具"
+    echo "• 性能测试脚本"
+    echo "• 系统优化工具"
+    echo "• 安全检测功能"
+    echo "• 流媒体解锁检测"
+    echo "• TikTok解锁检测（已添加）"
+    echo ""
+    echo -e "${GREEN}[*] 特色功能:${NC}"
+    echo "• 集成多种测试工具于一体"
+    echo "• 支持国内外网络环境"
+    echo "• 提供镜像加速选项"
+    echo "• 界面友好，操作简单"
+    echo "• 定期更新维护"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 脚本会自动检测网络环境"
+    echo "• 国内机器如果无法访问，会自动尝试镜像"
+    echo "• 某些功能可能需要较长时间执行"
+    echo "• 建议在稳定网络环境下使用"
+    echo ""
+    
+    echo -e "${GREEN}[*] 执行选项:${NC}"
+    echo "1. 标准版本 - 使用官方源"
+    echo "2. 镜像版本 - 使用fastgit镜像（国内推荐）"
+    echo "3. 查看脚本信息"
+    echo ""
+    
+    read -p "请选择执行方式 [1-3，默认1]: " toolbox_choice
+    
+    # 处理空输入，默认选择第一个选项
+    if [[ -z "$toolbox_choice" ]]; then
+        toolbox_choice="1"
+        echo -e "${BLUE}[INFO]${NC} 默认选择: $toolbox_choice"
+    fi
+    
+    case "$toolbox_choice" in
+        "1")
+            echo ""
+            echo -e "${GREEN}[*] 选择：标准版本（官方源）${NC}"
+            echo "使用官方GitHub源，适合海外服务器。"
+            echo ""
+            read -p "是否继续执行ToolBox？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行ToolBox（标准版本）..."
+                echo -e "${YELLOW}正在下载并执行脚本，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行ToolBox脚本..."
+                    bash <(curl -Lso- https://sh.vps.dance/toolbox.sh)
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "ToolBox执行完成！"
+                echo ""
+                echo -e "${GREEN}[*] 使用说明:${NC}"
+                echo "• ToolBox提供了丰富的VPS测试和管理功能"
+                echo "• 可以重复运行脚本使用不同功能"
+                echo "• 建议收藏脚本地址以便后续使用"
+                echo ""
+            else
+                log_info "已取消ToolBox执行"
+            fi
+            ;;
+        "2")
+            echo ""
+            echo -e "${GREEN}[*] 选择：镜像版本（fastgit镜像）${NC}"
+            echo "使用fastgit镜像源，适合国内服务器。"
+            echo ""
+            read -p "是否继续执行ToolBox？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行ToolBox（镜像版本）..."
+                echo -e "${YELLOW}正在下载并执行脚本，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl执行ToolBox脚本（fastgit镜像）..."
+                    bash <(curl -Lso- https://sh.vps.dance/toolbox.sh) fastgit
+                else
+                    log_error "curl命令不可用，请先安装curl"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "ToolBox执行完成！"
+                echo ""
+                echo -e "${GREEN}[*] 使用说明:${NC}"
+                echo "• ToolBox提供了丰富的VPS测试和管理功能"
+                echo "• 可以重复运行脚本使用不同功能"
+                echo "• 建议收藏脚本地址以便后续使用"
+                echo ""
+            else
+                log_info "已取消ToolBox执行"
+            fi
+            ;;
+        "3")
+            echo ""
+            echo -e "${GREEN}[*] ToolBox脚本信息${NC}"
+            echo ""
+            echo "脚本名称：ToolBox by vps.dance"
+            echo "项目地址：https://github.com/vps-dance/toolbox"
+            echo "官方网站：https://vps.dance"
+            echo "脚本地址：https://sh.vps.dance/toolbox.sh"
+            echo ""
+            echo "主要特色："
+            echo "• 集成TikTok解锁检测功能"
+            echo "• 支持多种网络测试工具"
+            echo "• 提供系统性能测试"
+            echo "• 包含流媒体解锁检测"
+            echo "• 支持镜像加速访问"
+            echo ""
+            echo "使用命令："
+            echo "bash <(curl -Lso- https://sh.vps.dance/toolbox.sh)          # 标准版本"
+            echo "bash <(curl -Lso- https://sh.vps.dance/toolbox.sh) fastgit  # 镜像版本"
+            echo ""
+            ;;
+        *)
+            log_warning "无效选择，已取消操作"
+            ;;
+    esac
+} 
+
+execute_ecs_spiritlhls() {
+    log_step "执行ecs（融合怪测评脚本）..."
+    echo ""
+    echo -e "${CYAN}=================================================="
+    echo "         ecs（融合怪测评脚本） by spiritLHLS"
+    echo "=================================================="
+    echo -e "${NC}"
+    echo ""
+    echo -e "${GREEN}[*] 关于ecs（融合怪测评脚本）:${NC}"
+    echo "ecs是spiritLHLS开发的融合怪测评脚本，集成了多种VPS测试功能于一体。"
+    echo "作者：spiritLHLS"
+    echo "项目地址：https://github.com/spiritLHLS/ecs"
+    echo "Golang版本：https://github.com/oneclickvirt/ecs"
+    echo ""
+    echo -e "${GREEN}[*] 主要功能:${NC}"
+    echo "• 基础信息查询（系统、硬件、网络信息）"
+    echo "• CPU性能测试（支持GeekBench 4/5/6）"
+    echo "• 内存性能测试"
+    echo "• 磁盘I/O测试（dd和fio两种方式）"
+    echo "• 流媒体解锁测试（Netflix、Disney+、YouTube等）"
+    echo "• TikTok解锁检测"
+    echo "• 三网回程路由测试"
+    echo "• IP质量检测（15家数据库查询）"
+    echo "• 网络测速（自动更新测速节点）"
+    echo ""
+    echo -e "${GREEN}[*] 支持系统:${NC}"
+    echo "• 完全支持：Ubuntu 18+, Debian 8+, CentOS 7+, Fedora 33+"
+    echo "• 完全支持：AlmaLinux 8.5+, OracleLinux 8+, RockyLinux 8+"
+    echo "• 半支持：FreeBSD, Armbian"
+    echo "• 支持架构：amd64, arm64, i386, arm"
+    echo ""
+    echo -e "${GREEN}[*] 特色功能:${NC}"
+    echo "• 自由组合测试方向和单项测试"
+    echo "• 自动上传结果到pastebin并生成分享链接"
+    echo "• 支持交互式和无交互式（参数模式）执行"
+    echo "• 内置CDN加速，支持国内外环境"
+    echo "• 测试结果保存在test_result.txt文件中"
+    echo ""
+    echo -e "${YELLOW}[!] 注意事项:${NC}"
+    echo "• 建议在/root路径下执行，避免环境依赖问题"
+    echo "• 不要在生产环境中使用，建议使用测试机器"
+    echo "• 可在screen或tmux中执行，避免SSH中断"
+    echo "• 测试时间较长，配置差的机器可能需要30-60分钟"
+    echo "• 按Ctrl+C可中途退出并自动清理环境"
+    echo ""
+    
+    echo -e "${GREEN}[*] 执行选项:${NC}"
+    echo "1. 交互式执行 - 显示菜单选择测试项目"
+    echo "2. 融合怪完全体 - 执行所有测试项目（推荐）"
+    echo "3. IP质量检测 - 仅执行IP质量和邮件端口检测"
+    echo "4. 查看脚本信息"
+    echo ""
+    
+    read -p "请选择执行方式 [1-4，默认2]: " ecs_choice
+    
+    # 处理空输入，默认选择第二个选项
+    if [[ -z "$ecs_choice" ]]; then
+        ecs_choice="2"
+        echo -e "${BLUE}[INFO]${NC} 默认选择: $ecs_choice"
+    fi
+    
+    case "$ecs_choice" in
+        "1")
+            echo ""
+            echo -e "${GREEN}[*] 选择：交互式执行${NC}"
+            echo "将显示完整菜单，您可以选择需要的测试项目。"
+            echo ""
+            read -p "是否继续执行ecs融合怪测评？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行ecs融合怪测评（交互式）..."
+                echo -e "${YELLOW}正在下载并执行脚本，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl和wget是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl下载ecs脚本..."
+                    curl -L https://github.com/spiritLHLS/ecs/raw/main/ecs.sh -o ecs.sh && chmod +x ecs.sh && bash ecs.sh
+                elif command -v wget &> /dev/null; then
+                    log_info "使用wget下载ecs脚本..."
+                    bash <(wget -qO- bash.spiritlhl.net/ecs)
+                else
+                    log_error "curl和wget命令都不可用，请先安装其中一个"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "ecs融合怪测评执行完成！"
+                echo ""
+                echo -e "${GREEN}[*] 使用说明:${NC}"
+                echo "• 测试结果已保存在当前目录的test_result.txt文件中"
+                echo "• 如果生成了分享链接，可以通过链接查看详细结果"
+                echo "• 建议保存测试结果以备后续参考"
+                echo ""
+            else
+                log_info "已取消ecs融合怪测评"
+            fi
+            ;;
+        "2")
+            echo ""
+            echo -e "${GREEN}[*] 选择：融合怪完全体${NC}"
+            echo "将执行所有测试项目，包括系统信息、性能测试、网络测试等。"
+            echo -e "${YELLOW}[!] 注意：完全体测试时间较长，请确保网络稳定。${NC}"
+            echo ""
+            read -p "是否继续执行融合怪完全体测试？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行ecs融合怪完全体测试..."
+                echo -e "${YELLOW}正在下载并执行脚本，这可能需要30-60分钟，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查curl和wget是否可用
+                if command -v curl &> /dev/null; then
+                    log_info "使用curl下载ecs脚本..."
+                    curl -L https://github.com/spiritLHLS/ecs/raw/main/ecs.sh -o ecs.sh && chmod +x ecs.sh && bash ecs.sh -m 1
+                elif command -v wget &> /dev/null; then
+                    log_info "使用wget下载ecs脚本..."
+                    wget -qO ecs.sh https://github.com/spiritLHLS/ecs/raw/main/ecs.sh && chmod +x ecs.sh && bash ecs.sh -m 1
+                else
+                    log_error "curl和wget命令都不可用，请先安装其中一个"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "ecs融合怪完全体测试执行完成！"
+                echo ""
+                echo -e "${GREEN}[*] 使用说明:${NC}"
+                echo "• 测试结果已保存在当前目录的test_result.txt文件中"
+                echo "• 如果生成了分享链接，可以通过链接查看详细结果"
+                echo "• 建议保存测试结果以备后续参考"
+                echo ""
+            else
+                log_info "已取消融合怪完全体测试"
+            fi
+            ;;
+        "3")
+            echo ""
+            echo -e "${GREEN}[*] 选择：IP质量检测${NC}"
+            echo "仅执行IP质量检测，包括15家数据库查询和邮件端口检测。"
+            echo ""
+            read -p "是否继续执行IP质量检测？(y/N): " confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo ""
+                log_info "开始执行IP质量检测..."
+                echo -e "${YELLOW}正在下载并执行脚本，请耐心等待...${NC}"
+                echo ""
+                
+                # 检查wget是否可用
+                if command -v wget &> /dev/null; then
+                    log_info "使用wget执行IP质量检测脚本..."
+                    bash <(wget -qO- bash.spiritlhl.net/ecs-ipcheck)
+                elif command -v curl &> /dev/null; then
+                    log_info "使用curl执行IP质量检测脚本..."
+                    bash <(curl -sL bash.spiritlhl.net/ecs-ipcheck)
+                else
+                    log_error "wget和curl命令都不可用，请先安装其中一个"
+                    return 1
+                fi
+                
+                echo ""
+                log_success "IP质量检测执行完成！"
+                echo ""
+                echo -e "${GREEN}[*] 检测说明:${NC}"
+                echo "• 检测结果显示了IP的详细质量信息"
+                echo "• 包含15家数据库的查询结果"
+                echo "• 包含DNS黑名单查询和邮件端口检测"
+                echo "• 支持IPv4和IPv6地址检测"
+                echo ""
+            else
+                log_info "已取消IP质量检测"
+            fi
+            ;;
+        "4")
+            echo ""
+            echo -e "${GREEN}[*] ecs融合怪测评脚本信息${NC}"
+            echo ""
+            echo "脚本名称：ecs（融合怪测评脚本）"
+            echo "作者：spiritLHLS"
+            echo "项目地址：https://github.com/spiritLHLS/ecs"
+            echo "Golang版本：https://github.com/oneclickvirt/ecs"
+            echo "测评频道：https://t.me/vps_reviews"
+            echo ""
+            echo "主要特色："
+            echo "• 融合多种测试脚本于一体，自优化修复"
+            echo "• 支持自由组合测试方向和单项测试"
+            echo "• 自动上传结果并生成分享链接"
+            echo "• 支持多系统多架构测试"
+            echo "• 内置CDN加速，国内外环境友好"
+            echo ""
+            echo "使用命令："
+            echo "# 交互式执行"
+            echo "bash <(wget -qO- bash.spiritlhl.net/ecs)"
+            echo ""
+            echo "# 融合怪完全体（无交互）"
+            echo "curl -L https://github.com/spiritLHLS/ecs/raw/main/ecs.sh -o ecs.sh && chmod +x ecs.sh && bash ecs.sh -m 1"
+            echo ""
+            echo "# IP质量检测"
+            echo "bash <(wget -qO- bash.spiritlhl.net/ecs-ipcheck)"
+            echo ""
+            ;;
+        *)
+            log_warning "无效选择，已取消操作"
+            ;;
+    esac
 } 

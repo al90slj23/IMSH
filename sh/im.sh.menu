@@ -71,14 +71,15 @@ show_veteran_scripts_menu() {
         
         echo -e "${GREEN}=== 前辈脚本 ===${NC}"
         echo ""
-        echo "1. 测试脚本 - 系统性能和网络测试"
-        echo "2. 安装脚本 - 软件和环境安装"
-        echo "3. 维护脚本 - 系统维护和清理"
-        echo "4. 监控脚本 - 系统监控和告警"
-        echo "5. 工具脚本 - 实用工具集合"
+        echo "1. 综合脚本 - 多功能综合工具集合"
+        echo "2. 测试脚本 - 系统性能和网络测试"
+        echo "3. 安装脚本 - 软件和环境安装"
+        echo "4. 维护脚本 - 系统维护和清理"
+        echo "5. 监控脚本 - 系统监控和告警"
+        echo "6. 工具脚本 - 实用工具集合"
         echo ""
         
-        read -p "请选择功能 [1-5]: " choice
+        read -p "请选择功能 [1-6]: " choice
         
         # 处理空输入，默认选择第一个选项
         if [[ -z "$choice" ]]; then
@@ -99,18 +100,21 @@ show_veteran_scripts_menu() {
             2) # 处理选择
                 case "$choice" in
                     "1")
-                        show_test_scripts_menu
+                        show_comprehensive_scripts_menu
                         ;;
                     "2")
-                        show_install_scripts_menu
+                        show_test_scripts_menu
                         ;;
                     "3")
-                        show_maintenance_scripts_menu
+                        show_install_scripts_menu
                         ;;
                     "4")
-                        show_monitor_scripts_menu
+                        show_maintenance_scripts_menu
                         ;;
                     "5")
+                        show_monitor_scripts_menu
+                        ;;
+                    "6")
                         show_tool_scripts_menu
                         ;;
                     *)
@@ -119,6 +123,60 @@ show_veteran_scripts_menu() {
                         read -p "按回车键继续..."
                         ;;
                 esac
+                ;;
+            3) # 返回主菜单
+                return
+                ;;
+        esac
+    done
+}
+
+# 综合脚本菜单
+show_comprehensive_scripts_menu() {
+    CURRENT_PATH="主菜单 > 前辈脚本 > 综合脚本"
+    
+    while true; do
+        show_banner
+        show_navigation_tips
+        
+        echo -e "${GREEN}=== 综合脚本 ===${NC}"
+        echo ""
+        echo "1. ToolBox by vps.dance - 多功能VPS工具箱"
+        echo "2. ecs（融合怪测评脚本） by spiritLHLS - 全面系统测评"
+        echo ""
+        
+        read -p "请选择功能 [1-2]: " choice
+        
+        # 处理空输入，默认选择第一个选项
+        if [[ -z "$choice" ]]; then
+            choice="1"
+            echo -e "${BLUE}[INFO]${NC} 默认选择: $choice"
+        fi
+        
+        handle_input "$choice" "comprehensive_scripts"
+        local result=$?
+        
+        case $result in
+            0) # 返回上一层
+                return
+                ;;
+            1) # 重新显示菜单
+                continue
+                ;;
+            2) # 处理选择
+                case "$choice" in
+                    "1")
+                        execute_toolbox_vps_dance
+                        ;;
+                    "2")
+                        execute_ecs_spiritlhls
+                        ;;
+                    *)
+                        log_warning "无效选择: $choice"
+                        ;;
+                esac
+                echo ""
+                read -p "按回车键继续..."
                 ;;
             3) # 返回主菜单
                 return
